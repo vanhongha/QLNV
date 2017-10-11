@@ -57,6 +57,12 @@
     <Compile Include="Presentation\CapNhat.Designer.cs">
       <DependentUpon>CapNhat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\LietKe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\LietKe.Designer.cs">
+      <DependentUpon>LietKe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Presentation\Form1.resx">
@@ -64,6 +70,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\CapNhat.resx">
       <DependentUpon>CapNhat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\LietKe.resx">
+      <DependentUpon>LietKe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
