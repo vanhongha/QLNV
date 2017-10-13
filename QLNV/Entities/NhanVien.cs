@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,15 +41,13 @@ namespace QLNV.Entities
             set { sdt = value; }
         }
 
-        private LoaiNhanVien loaiNhanVien;
+        private int maLoaiNV;
 
-        public LoaiNhanVien LoaiNhanVien
+        public int MaLoaiNV
         {
-            get { return loaiNhanVien; }
-            set { loaiNhanVien = value; }
+            get { return maLoaiNV; }
+            set { maLoaiNV = value; }
         }
-
-
 
         private decimal luong;
 
@@ -66,14 +65,24 @@ namespace QLNV.Entities
             set { maPhong = value; }
         }
 
-        public NhanVien(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, LoaiNhanVien _loaiNhanVien,string _maPhong)
+        public NhanVien(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, int _maLoaiNV,string _maPhong)
         {
             maNV = _maNV;
             hoTen = _hoTen;
             ngaySinh = _ngaySinh;
             sdt = _sdt;
-            loaiNhanVien = _loaiNhanVien;
+            MaLoaiNV = _maLoaiNV;
             maPhong = _maPhong;
+        }
+
+        public NhanVien(DataRow row)
+        {
+            this.maNV = row["MaNV"].ToString();
+            this.hoTen = row["TenNV"].ToString();
+            this.sdt = row["SoDT"].ToString();
+            this.ngaySinh = (DateTime)row["NgaySinh"];
+            maLoaiNV = (int)row["MaLoaiNV"];
+            this.maPhong = row["MaPhong"].ToString();
         }
     }
 }

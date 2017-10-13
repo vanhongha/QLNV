@@ -35,5 +35,10 @@ namespace QLNV.BusinessLayer
             //return false;
             return true;
         }
+
+        public static List<NhanVien> GetList()
+        {
+            return NhanVienDAL.GetList();
+        }
     }
 }

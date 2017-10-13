@@ -23,37 +23,22 @@ namespace QLNV
             PhongBanBLL.PhongBanToCombobox(cboPhongBan);
             PhongBanBLL.PhongBanToCombobox(cboPhongBan_Loc);
             LoaiNhanVienBLL.LoaiNVToCombobox(cboLoaiNV);
+            LoadDatagridview();
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            LoaiNhanVien loaiNV = new LoaiNhanVien();
-            if(rdoNVBienChe.Checked)
-            {
-                foreach (LoaiNhanVien loai in LoaiNhanVienBLL.GetList())
-                {
-                    if (loai.MaLoai == 1)
-                    {
-                        loaiNV = loai;
-                        break;
-                    }
-                }
-            }
+            int maLoai;
+            if (rdoNVBienChe.Checked)
+                maLoai = 1;
             else
-                foreach (LoaiNhanVien loai in LoaiNhanVienBLL.GetList())
-                {
-                    if (loai.MaLoai == 2)
-                    {
-                        loaiNV = loai;
-                        break;
-                    }
-                }
+                maLoai = 2;
 
             NhanVien NV = new NhanVien(currentMaNV,
                 txtTenNV.Text,
                 dtNgaySinh.Value.Date,
                 txtSDTNV.Text,
-                loaiNV,
+                maLoai,
                 cboPhongBan.ValueMember);
 
             try
@@ -102,7 +87,19 @@ namespace QLNV
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            ClearAllInput();
+        }
 
+        void LoadDatagridview()
+        {
+            dgv.DataSource = NhanVienBLL.GetList();
+            dgv.Columns[0].HeaderText = "Mã NV";
+            dgv.Columns[1].HeaderText = "Họ tên";
+            dgv.Columns[2].HeaderText = "Ngày sinh";
+            dgv.Columns[3].HeaderText = "Điện thoại";
+            dgv.Columns[4].HeaderText = "Loại NV";
+            dgv.Columns[5].HeaderText = "Lương";
+            dgv.Columns[6].HeaderText = "Mã Phòng";
         }
 
         void ClearAllInput()

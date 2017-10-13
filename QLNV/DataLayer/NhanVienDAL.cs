@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QLNV.DataLayer
 {
@@ -22,7 +23,7 @@ namespace QLNV.DataLayer
             cmd.Parameters.AddWithValue("@SoDT", NV.SDT);
             cmd.Parameters.AddWithValue("@NgaySinh", NV.NgaySinh);
             cmd.Parameters.AddWithValue("@MaPhong", NV.MaPhong);
-            cmd.Parameters.AddWithValue("@MaLoaiNV", NV.LoaiNhanVien.MaLoai);
+            cmd.Parameters.AddWithValue("@MaLoaiNV", NV.MaLoaiNV);
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             db.dt = new DataTable();
@@ -39,6 +40,18 @@ namespace QLNV.DataLayer
                 return row.ItemArray[0].ToString();
             }
             return "";
+        }
+
+        public static List<NhanVien> GetList()
+        {
+            DataAccessHelper db = new DataAccessHelper();
+            DataTable dt = db.GetDataTable("SELECT * FROM NHANVIEN");
+            List<NhanVien> list = new List<NhanVien>();
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new NhanVien(row));
+            }
+            return list;
         }
     }
 }

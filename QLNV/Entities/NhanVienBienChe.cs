@@ -18,7 +18,7 @@ namespace QLNV.Entities
 
         private decimal phuCap;
 
-        public NhanVienBienChe(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, LoaiNhanVien _loaiNhanVien, string _maPhong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _loaiNhanVien, _maPhong)
+        public NhanVienBienChe(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, int _maLoaiNV, string _maPhong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong)
         {
         }
 
