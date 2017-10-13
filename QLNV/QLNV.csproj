@@ -45,8 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayer\LoaiNhanVienBLL.cs" />
     <Compile Include="BusinessLayer\NhanVienBLL.cs" />
+    <Compile Include="BusinessLayer\PhongBanBLL.cs" />
     <Compile Include="DataLayer\DataAccessHelper.cs" />
+    <Compile Include="DataLayer\LoaiNhanVienDAL.cs" />
+    <Compile Include="DataLayer\NhanVienDAL.cs" />
+    <Compile Include="DataLayer\PhongBanDAL.cs" />
+    <Compile Include="Entities\LoaiNhanVien.cs" />
+    <Compile Include="Entities\NhanVien.cs" />
+    <Compile Include="Entities\NhanVienBienChe.cs" />
+    <Compile Include="Entities\NhanVienCongNhat.cs" />
+    <Compile Include="Entities\PhongBan.cs" />
     <Compile Include="Presentation\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,8 +108,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -31,19 +31,20 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btnSua = new System.Windows.Forms.Button();
+            this.btnLamMoi = new System.Windows.Forms.Button();
+            this.btnXoa = new System.Windows.Forms.Button();
+            this.btnThem = new System.Windows.Forms.Button();
+            this.rdoNVBienChe = new System.Windows.Forms.RadioButton();
+            this.rdoNVCongNhat = new System.Windows.Forms.RadioButton();
+            this.cboPhongBan = new System.Windows.Forms.ComboBox();
             this.dtNgaySinh = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.txtPhuCap = new System.Windows.Forms.TextBox();
+            this.lbPhuCap = new System.Windows.Forms.Label();
+            this.txtBL_NgayLam = new System.Windows.Forms.TextBox();
+            this.lbBL_NgayLam = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtSDTNV = new System.Windows.Forms.TextBox();
@@ -54,12 +55,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.txtNam = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cboLoaiNV = new System.Windows.Forms.ComboBox();
+            this.cboPhongBan_Loc = new System.Windows.Forms.ComboBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -92,19 +93,20 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button3);
-            this.panel2.Controls.Add(this.button2);
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.radioButton2);
-            this.panel2.Controls.Add(this.radioButton1);
-            this.panel2.Controls.Add(this.comboBox1);
+            this.panel2.Controls.Add(this.btnSua);
+            this.panel2.Controls.Add(this.btnLamMoi);
+            this.panel2.Controls.Add(this.btnXoa);
+            this.panel2.Controls.Add(this.btnThem);
+            this.panel2.Controls.Add(this.rdoNVBienChe);
+            this.panel2.Controls.Add(this.rdoNVCongNhat);
+            this.panel2.Controls.Add(this.cboPhongBan);
             this.panel2.Controls.Add(this.dtNgaySinh);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.textBox3);
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Controls.Add(this.textBox2);
-            this.panel2.Controls.Add(this.label8);
+            this.panel2.Controls.Add(this.txtPhuCap);
+            this.panel2.Controls.Add(this.lbPhuCap);
+            this.panel2.Controls.Add(this.txtBL_NgayLam);
+            this.panel2.Controls.Add(this.lbBL_NgayLam);
             this.panel2.Controls.Add(this.textBox1);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.txtSDTNV);
@@ -119,69 +121,83 @@
             this.panel2.Size = new System.Drawing.Size(314, 604);
             this.panel2.TabIndex = 1;
             // 
-            // button3
+            // btnSua
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(113, 513);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(65, 41);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "Sửa";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnSua.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSua.Location = new System.Drawing.Point(152, 503);
+            this.btnSua.Name = "btnSua";
+            this.btnSua.Size = new System.Drawing.Size(88, 41);
+            this.btnSua.TabIndex = 16;
+            this.btnSua.Text = "Sửa";
+            this.btnSua.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnLamMoi
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(184, 513);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(65, 41);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Xóa";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnLamMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLamMoi.Location = new System.Drawing.Point(152, 553);
+            this.btnLamMoi.Name = "btnLamMoi";
+            this.btnLamMoi.Size = new System.Drawing.Size(88, 41);
+            this.btnLamMoi.TabIndex = 16;
+            this.btnLamMoi.Text = "Làm mới";
+            this.btnLamMoi.UseVisualStyleBackColor = true;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnXoa_Click);
             // 
-            // button1
+            // btnXoa
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(42, 513);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(65, 41);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "Thêm";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnXoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoa.Location = new System.Drawing.Point(58, 553);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Size = new System.Drawing.Size(88, 41);
+            this.btnXoa.TabIndex = 16;
+            this.btnXoa.Text = "Xóa";
+            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
-            // radioButton2
+            // btnThem
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(12, 302);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(184, 26);
-            this.radioButton2.TabIndex = 15;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Nhân viên Biên chế";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThem.Location = new System.Drawing.Point(58, 503);
+            this.btnThem.Name = "btnThem";
+            this.btnThem.Size = new System.Drawing.Size(88, 41);
+            this.btnThem.TabIndex = 16;
+            this.btnThem.Text = "Thêm";
+            this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
-            // radioButton1
+            // rdoNVBienChe
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(12, 274);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(197, 26);
-            this.radioButton1.TabIndex = 15;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Nhân viên Công nhật";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rdoNVBienChe.AutoSize = true;
+            this.rdoNVBienChe.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdoNVBienChe.Location = new System.Drawing.Point(12, 302);
+            this.rdoNVBienChe.Name = "rdoNVBienChe";
+            this.rdoNVBienChe.Size = new System.Drawing.Size(184, 26);
+            this.rdoNVBienChe.TabIndex = 15;
+            this.rdoNVBienChe.TabStop = true;
+            this.rdoNVBienChe.Text = "Nhân viên Biên chế";
+            this.rdoNVBienChe.UseVisualStyleBackColor = true;
+            this.rdoNVBienChe.CheckedChanged += new System.EventHandler(this.rdoNVBienChe_CheckedChanged);
             // 
-            // comboBox1
+            // rdoNVCongNhat
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 244);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(289, 28);
-            this.comboBox1.TabIndex = 14;
+            this.rdoNVCongNhat.AutoSize = true;
+            this.rdoNVCongNhat.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdoNVCongNhat.Location = new System.Drawing.Point(12, 274);
+            this.rdoNVCongNhat.Name = "rdoNVCongNhat";
+            this.rdoNVCongNhat.Size = new System.Drawing.Size(197, 26);
+            this.rdoNVCongNhat.TabIndex = 15;
+            this.rdoNVCongNhat.TabStop = true;
+            this.rdoNVCongNhat.Text = "Nhân viên Công nhật";
+            this.rdoNVCongNhat.UseVisualStyleBackColor = true;
+            this.rdoNVCongNhat.CheckedChanged += new System.EventHandler(this.rdoNVCongNhat_CheckedChanged);
+            // 
+            // cboPhongBan
+            // 
+            this.cboPhongBan.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboPhongBan.FormattingEnabled = true;
+            this.cboPhongBan.Location = new System.Drawing.Point(12, 244);
+            this.cboPhongBan.Name = "cboPhongBan";
+            this.cboPhongBan.Size = new System.Drawing.Size(289, 28);
+            this.cboPhongBan.TabIndex = 14;
             // 
             // dtNgaySinh
             // 
@@ -211,41 +227,41 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Ngày sinh:";
             // 
-            // textBox3
+            // txtPhuCap
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(12, 460);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(289, 27);
-            this.textBox3.TabIndex = 11;
+            this.txtPhuCap.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPhuCap.Location = new System.Drawing.Point(12, 460);
+            this.txtPhuCap.Name = "txtPhuCap";
+            this.txtPhuCap.Size = new System.Drawing.Size(289, 27);
+            this.txtPhuCap.TabIndex = 11;
             // 
-            // label9
+            // lbPhuCap
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(12, 436);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(81, 22);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Phụ cấp:";
+            this.lbPhuCap.AutoSize = true;
+            this.lbPhuCap.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPhuCap.Location = new System.Drawing.Point(12, 436);
+            this.lbPhuCap.Name = "lbPhuCap";
+            this.lbPhuCap.Size = new System.Drawing.Size(81, 22);
+            this.lbPhuCap.TabIndex = 9;
+            this.lbPhuCap.Text = "Phụ cấp:";
             // 
-            // textBox2
+            // txtBL_NgayLam
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(12, 407);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(289, 27);
-            this.textBox2.TabIndex = 11;
+            this.txtBL_NgayLam.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBL_NgayLam.Location = new System.Drawing.Point(12, 407);
+            this.txtBL_NgayLam.Name = "txtBL_NgayLam";
+            this.txtBL_NgayLam.Size = new System.Drawing.Size(289, 27);
+            this.txtBL_NgayLam.TabIndex = 11;
             // 
-            // label8
+            // lbBL_NgayLam
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(12, 383);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(95, 22);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "Bậc lương:";
+            this.lbBL_NgayLam.AutoSize = true;
+            this.lbBL_NgayLam.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbBL_NgayLam.Location = new System.Drawing.Point(12, 383);
+            this.lbBL_NgayLam.Name = "lbBL_NgayLam";
+            this.lbBL_NgayLam.Size = new System.Drawing.Size(95, 22);
+            this.lbBL_NgayLam.TabIndex = 9;
+            this.lbBL_NgayLam.Text = "Bậc lương:";
             // 
             // textBox1
             // 
@@ -306,6 +322,7 @@
             this.txtMaNV.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaNV.Location = new System.Drawing.Point(12, 32);
             this.txtMaNV.Name = "txtMaNV";
+            this.txtMaNV.ReadOnly = true;
             this.txtMaNV.Size = new System.Drawing.Size(289, 27);
             this.txtMaNV.TabIndex = 7;
             // 
@@ -331,12 +348,12 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.txtNam);
             this.panel4.Controls.Add(this.label10);
             this.panel4.Controls.Add(this.label11);
-            this.panel4.Controls.Add(this.comboBox4);
             this.panel4.Controls.Add(this.comboBox3);
-            this.panel4.Controls.Add(this.comboBox2);
-            this.panel4.Controls.Add(this.comboBox5);
+            this.panel4.Controls.Add(this.cboLoaiNV);
+            this.panel4.Controls.Add(this.cboPhongBan_Loc);
             this.panel4.Controls.Add(this.checkBox3);
             this.panel4.Controls.Add(this.checkBox2);
             this.panel4.Controls.Add(this.checkBox1);
@@ -345,6 +362,13 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(651, 100);
             this.panel4.TabIndex = 1;
+            // 
+            // txtNam
+            // 
+            this.txtNam.Location = new System.Drawing.Point(449, 70);
+            this.txtNam.Name = "txtNam";
+            this.txtNam.Size = new System.Drawing.Size(100, 20);
+            this.txtNam.TabIndex = 19;
             // 
             // label10
             // 
@@ -364,14 +388,6 @@
             this.label11.TabIndex = 18;
             this.label11.Text = "Tháng:";
             // 
-            // comboBox4
-            // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(449, 70);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(89, 21);
-            this.comboBox4.TabIndex = 13;
-            // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
@@ -380,21 +396,21 @@
             this.comboBox3.Size = new System.Drawing.Size(89, 21);
             this.comboBox3.TabIndex = 14;
             // 
-            // comboBox2
+            // cboLoaiNV
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(259, 41);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(355, 21);
-            this.comboBox2.TabIndex = 15;
+            this.cboLoaiNV.FormattingEnabled = true;
+            this.cboLoaiNV.Location = new System.Drawing.Point(259, 41);
+            this.cboLoaiNV.Name = "cboLoaiNV";
+            this.cboLoaiNV.Size = new System.Drawing.Size(355, 21);
+            this.cboLoaiNV.TabIndex = 15;
             // 
-            // comboBox5
+            // cboPhongBan_Loc
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(259, 13);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(355, 21);
-            this.comboBox5.TabIndex = 16;
+            this.cboPhongBan_Loc.FormattingEnabled = true;
+            this.cboPhongBan_Loc.Location = new System.Drawing.Point(259, 13);
+            this.cboPhongBan_Loc.Name = "cboPhongBan_Loc";
+            this.cboPhongBan_Loc.Size = new System.Drawing.Size(355, 21);
+            this.cboPhongBan_Loc.TabIndex = 16;
             // 
             // checkBox3
             // 
@@ -447,7 +463,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "QLNV";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -476,29 +492,30 @@
         private System.Windows.Forms.TextBox txtMaNV;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox cboPhongBan;
+        private System.Windows.Forms.RadioButton rdoNVBienChe;
+        private System.Windows.Forms.RadioButton rdoNVCongNhat;
+        private System.Windows.Forms.Button btnSua;
+        private System.Windows.Forms.Button btnXoa;
+        private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtBL_NgayLam;
+        private System.Windows.Forms.Label lbBL_NgayLam;
+        private System.Windows.Forms.TextBox txtPhuCap;
+        private System.Windows.Forms.Label lbPhuCap;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox cboLoaiNV;
+        private System.Windows.Forms.ComboBox cboPhongBan_Loc;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button btnLamMoi;
+        private System.Windows.Forms.TextBox txtNam;
     }
 }
 
