@@ -41,9 +41,9 @@ namespace QLNV.Entities
             set { sdt = value; }
         }
 
-        private int maLoaiNV;
+        private string maLoaiNV;
 
-        public int MaLoaiNV
+        public string MaLoaiNV
         {
             get { return maLoaiNV; }
             set { maLoaiNV = value; }
@@ -65,7 +65,7 @@ namespace QLNV.Entities
             set { maPhong = value; }
         }
 
-        public NhanVien(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, int _maLoaiNV,string _maPhong)
+        public NhanVien(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV,string _maPhong)
         {
             maNV = _maNV;
             hoTen = _hoTen;
@@ -81,7 +81,7 @@ namespace QLNV.Entities
             this.hoTen = row["TenNV"].ToString();
             this.sdt = row["SoDT"].ToString();
             this.ngaySinh = (DateTime)row["NgaySinh"];
-            maLoaiNV = (int)row["MaLoaiNV"];
+            maLoaiNV = row["MaLoaiNV"].ToString();
             this.maPhong = row["MaPhong"].ToString();
         }
     }

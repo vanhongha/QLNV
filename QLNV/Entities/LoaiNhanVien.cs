@@ -10,9 +10,9 @@ namespace QLNV.Entities
 {
     class LoaiNhanVien
     {
-        private int maLoai;
+        private string maLoai;
 
-        public int MaLoai
+        public string MaLoai
         {
             get { return maLoai; }
             set { maLoai = value; }
@@ -28,11 +28,11 @@ namespace QLNV.Entities
 
         public LoaiNhanVien(DataRow row)
         {
-            this.maLoai = (int)row["MaLoaiNV"];
+            this.maLoai = row["MaLoaiNV"].ToString();
             this.tenLoai = row["TenLoaiNV"].ToString();
         }
 
-        public LoaiNhanVien(int _maLoai, string _tenLoai)
+        public LoaiNhanVien(string _maLoai, string _tenLoai)
         {
             maLoai = _maLoai;
             tenLoai = _tenLoai;

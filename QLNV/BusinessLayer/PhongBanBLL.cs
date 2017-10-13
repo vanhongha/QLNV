@@ -16,13 +16,13 @@ namespace QLNV.BusinessLayer
             return PhongBanDAL.GetList();
         }
 
-        public static void PhongBanToCombobox(ComboBox combobox)
+        public static void PhongBanToCombobox(ComboBox comboBox)
         {
-            foreach(PhongBan pb in GetList())
+            comboBox.DisplayMember = "Text";
+            comboBox.ValueMember = "Value";
+            foreach (PhongBan pb in GetList())
             {
-                combobox.Items.Add(pb.TenPhong.Trim());
-                combobox.ValueMember = pb.MaPhong.Trim();
-                combobox.DisplayMember = pb.TenPhong.Trim();
+                comboBox.Items.Add(new { Text = pb.TenPhong.Trim(), Value = pb.MaPhong.Trim() });
             }
         }
     }

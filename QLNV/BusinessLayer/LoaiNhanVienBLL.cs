@@ -13,13 +13,13 @@ namespace QLNV.BusinessLayer
             return LoaiNhanVienDAL.GetList();
         }
 
-        public static void LoaiNVToCombobox(ComboBox combobox)
+        public static void LoaiNVToCombobox(ComboBox comboBox)
         {
-            foreach (LoaiNhanVien pb in GetList())
+            comboBox.DisplayMember = "Text";
+            comboBox.ValueMember = "Value";
+            foreach (LoaiNhanVien loaiNV in GetList())
             {
-                combobox.Items.Add(pb.TenLoai.Trim());
-                combobox.ValueMember = pb.MaLoai.ToString().Trim();
-                combobox.DisplayMember = pb.TenLoai.Trim();
+                comboBox.Items.Add(new { Text = loaiNV.TenLoai.Trim(), Value = loaiNV.MaLoai.ToString().Trim() });
             }
         }
     }

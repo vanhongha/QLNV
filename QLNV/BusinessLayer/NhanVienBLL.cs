@@ -40,5 +40,11 @@ namespace QLNV.BusinessLayer
         {
             return NhanVienDAL.GetList();
         }
+
+        public static List<NhanVien> GetListTheoKey(DGVTypeLoad type, string maPhong = null, string loaiPhong = null, string thang = null)
+        {
+            return NhanVienDAL.GetListTheoKey(type, maPhong, loaiPhong, thang);
+        }
+        
     }
 }

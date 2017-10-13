@@ -10,7 +10,7 @@ namespace QLNV.Entities
     {
         private float ngayLam;
 
-        public NhanVienCongNhat(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, int _maLoaiNV, string _maPhong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong)
+        public NhanVienCongNhat(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV, string _maPhong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong)
         {
         }
 

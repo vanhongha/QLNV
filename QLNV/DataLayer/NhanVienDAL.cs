@@ -53,5 +53,27 @@ namespace QLNV.DataLayer
             }
             return list;
         }
+
+        public static List<NhanVien> GetListTheoKey(DGVTypeLoad type, string maPhong = null, string maLoai = null, string thang = null)
+        {
+            DataAccessHelper db = new DataAccessHelper();
+            DataTable dt = null;
+            switch (type)
+            {
+                case DGVTypeLoad.Phong:
+                     dt = db.GetDataTable("SELECT * FROM NHANVIEN WHERE MAPHONG = '" + maPhong + "'");
+                    break;
+                case DGVTypeLoad.LoaiNV:
+                    dt = db.GetDataTable("SELECT * FROM NHANVIEN WHERE MaLoaiNV = '" + maLoai + "'");
+                    break;
+            }
+          
+            List<NhanVien> list = new List<NhanVien>();
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new NhanVien(row));
+            }
+            return list;
+        }
     }
 }

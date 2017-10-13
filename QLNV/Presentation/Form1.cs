@@ -3,9 +3,16 @@ using QLNV.DataLayer;
 using System.Windows.Forms;
 using QLNV.BusinessLayer;
 using QLNV.Entities;
+using System.Collections.Generic;
 
 namespace QLNV
 {
+    public enum DGVTypeLoad
+    {
+        None,
+        Phong,
+        LoaiNV
+    }
     public partial class Form1 : Form
     {
         string currentMaNV;
@@ -16,31 +23,31 @@ namespace QLNV
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            rdoNVCongNhat.Checked = true;
+            cboPhongBan_Loc.Enabled = false;
+            cboLoaiNV.Enabled = false;
             currentMaNV = NhanVienBLL.AutoMaNV();
             txtMaNV.Text = currentMaNV;
-            UpDateInput();
+            cboThang.Enabled = false;
+            txtNam.Enabled = false;
+           
             PhongBanBLL.PhongBanToCombobox(cboPhongBan);
             PhongBanBLL.PhongBanToCombobox(cboPhongBan_Loc);
             LoaiNhanVienBLL.LoaiNVToCombobox(cboLoaiNV);
-            LoadDatagridview();
+            LoaiNhanVienBLL.LoaiNVToCombobox(cboLoai);
+
+            LoadDatagridview(DGVTypeLoad.None);
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            int maLoai;
-            if (rdoNVBienChe.Checked)
-                maLoai = 1;
-            else
-                maLoai = 2;
-
+            string maLoai = GetKeyFromCombobox(cboLoai.SelectedItem.ToString());
+            string maPhong = GetKeyFromCombobox(cboPhongBan.SelectedItem.ToString());
             NhanVien NV = new NhanVien(currentMaNV,
                 txtTenNV.Text,
                 dtNgaySinh.Value.Date,
                 txtSDTNV.Text,
                 maLoai,
-                cboPhongBan.ValueMember);
-
+                maPhong);
             try
             {
                 if (NhanVienBLL.ThemNV(NV))
@@ -55,34 +62,27 @@ namespace QLNV
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin cần thiết!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         void UpDateInput()
         {
-            if(rdoNVCongNhat.Checked)
+            if ((cboLoaiNV.Text.Trim()) != null)
             {
-                lbBL_NgayLam.Text = "Ngày làm:";
-                lbPhuCap.Visible = false;
-                txtPhuCap.Visible = false;
+                if (GetKeyFromCombobox(cboLoai.SelectedItem.ToString()).Equals("Ma1"))
+                {
+                    lbBL_NgayLam.Text = "Ngày làm:";
+                    lbPhuCap.Visible = false;
+                    txtPhuCap.Visible = false;
+                }
+                else
+                {
+                    lbBL_NgayLam.Text = "Bậc lương:";
+                    lbPhuCap.Visible = true;
+                    txtPhuCap.Visible = true;
+                }
             }
-            else
-            {
-                lbBL_NgayLam.Text = "Bậc lương:";
-                lbPhuCap.Visible = true;
-                txtPhuCap.Visible = true;
-            }
-        }
-
-        private void rdoNVBienChe_CheckedChanged(object sender, EventArgs e)
-        {
-            UpDateInput();
-        }
-
-        private void rdoNVCongNhat_CheckedChanged(object sender, EventArgs e)
-        {
-            UpDateInput();
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
@@ -90,9 +90,21 @@ namespace QLNV
             ClearAllInput();
         }
 
-        void LoadDatagridview()
+        void LoadDatagridview(DGVTypeLoad type, string key = null)
         {
-            dgv.DataSource = NhanVienBLL.GetList();
+            switch (type)
+            {
+                case DGVTypeLoad.None:
+                    dgv.DataSource = NhanVienBLL.GetList();
+                    break;
+                case DGVTypeLoad.Phong:
+                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, key);
+                    break;
+                case DGVTypeLoad.LoaiNV:
+                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, "", key);
+                    break;
+            }
+         
             dgv.Columns[0].HeaderText = "Mã NV";
             dgv.Columns[1].HeaderText = "Họ tên";
             dgv.Columns[2].HeaderText = "Ngày sinh";
@@ -101,13 +113,64 @@ namespace QLNV
             dgv.Columns[5].HeaderText = "Lương";
             dgv.Columns[6].HeaderText = "Mã Phòng";
         }
-
         void ClearAllInput()
         {
             txtTenNV.Text = "";
             txtSDTNV.Text = "";
             cboPhongBan.Text = "";
-            rdoNVCongNhat.Checked = true;
+        }
+
+        private void ckLocLoaiNV_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckLocTheoPhong.Checked)
+            {
+                LoadDatagridview(DGVTypeLoad.LoaiNV);
+                cboLoaiNV.Enabled = true;
+            }
+            else
+            {
+                cboLoaiNV.Enabled = true;
+            }
+        }
+
+        private void cboPhongBan_Loc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string key = GetKeyFromCombobox(cboPhongBan_Loc.SelectedItem.ToString());
+            LoadDatagridview(DGVTypeLoad.Phong, key);
+        }
+        private void cboLoaiNV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string key = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
+            LoadDatagridview(DGVTypeLoad.LoaiNV, key);
+        }
+
+        private void cboLoai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpDateInput();
+        }
+
+        private void ckLocTheoPhong_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckLocTheoPhong.Checked)
+            {
+                LoadDatagridview(DGVTypeLoad.Phong);
+                cboPhongBan_Loc.Enabled = true;
+            }
+            else
+            {
+                cboPhongBan_Loc.Enabled = false;
+            }
+        }
+
+        string GetKeyFromCombobox(string value)
+        {
+            if (value != null)
+            {
+                var code = value.Split(new[] { "Value = " }, StringSplitOptions.None)[1];
+                code = code.Substring(0, code.Length - 2);
+                return code;
+            }
+            return null;
         }
     }
 }
