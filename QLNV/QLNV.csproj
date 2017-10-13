@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayer\NhanVienBLL.cs" />
+    <Compile Include="DataLayer\DataAccessHelper.cs" />
     <Compile Include="Presentation\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
