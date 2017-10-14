@@ -11,7 +11,8 @@ namespace QLNV
     {
         None,
         Phong,
-        LoaiNV
+        LoaiNV,
+        Loai_Phong
     }
     public partial class Form1 : Form
     {
@@ -103,8 +104,29 @@ namespace QLNV
                 case DGVTypeLoad.LoaiNV:
                     dgv.DataSource = NhanVienBLL.GetListTheoKey(type, "", key);
                     break;
+                case DGVTypeLoad.Loai_Phong:
+                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, "", key);
+                    break;
             }
          
+            dgv.Columns[0].HeaderText = "Mã NV";
+            dgv.Columns[1].HeaderText = "Họ tên";
+            dgv.Columns[2].HeaderText = "Ngày sinh";
+            dgv.Columns[3].HeaderText = "Điện thoại";
+            dgv.Columns[4].HeaderText = "Loại NV";
+            dgv.Columns[5].HeaderText = "Lương";
+            dgv.Columns[6].HeaderText = "Mã Phòng";
+        }
+
+        void LoadDatagridviewMultipleChoice(DGVTypeLoad type, string maPhong = null, string maLoaiNV = null, string thang= null, string nam = null)
+        {
+            switch (type)
+            {
+                case DGVTypeLoad.Loai_Phong:
+                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, maPhong, maLoaiNV);
+                    break;
+            }
+
             dgv.Columns[0].HeaderText = "Mã NV";
             dgv.Columns[1].HeaderText = "Họ tên";
             dgv.Columns[2].HeaderText = "Ngày sinh";
@@ -122,9 +144,12 @@ namespace QLNV
 
         private void ckLocLoaiNV_CheckedChanged(object sender, EventArgs e)
         {
-            if (ckLocTheoPhong.Checked)
+            if (ckLocLoaiNV.Checked)
             {
-                LoadDatagridview(DGVTypeLoad.LoaiNV);
+                if (!ckLocTheoPhong.Checked)
+                    LoadDatagridview(DGVTypeLoad.LoaiNV);
+                else
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong);
                 cboLoaiNV.Enabled = true;
             }
             else
@@ -132,28 +157,14 @@ namespace QLNV
                 cboLoaiNV.Enabled = true;
             }
         }
-
-        private void cboPhongBan_Loc_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string key = GetKeyFromCombobox(cboPhongBan_Loc.SelectedItem.ToString());
-            LoadDatagridview(DGVTypeLoad.Phong, key);
-        }
-        private void cboLoaiNV_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string key = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
-            LoadDatagridview(DGVTypeLoad.LoaiNV, key);
-        }
-
-        private void cboLoai_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpDateInput();
-        }
-
         private void ckLocTheoPhong_CheckedChanged(object sender, EventArgs e)
         {
             if (ckLocTheoPhong.Checked)
             {
-                LoadDatagridview(DGVTypeLoad.Phong);
+                if (!ckLocLoaiNV.Checked)
+                    LoadDatagridview(DGVTypeLoad.Phong);
+                else
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong);
                 cboPhongBan_Loc.Enabled = true;
             }
             else
@@ -161,6 +172,45 @@ namespace QLNV
                 cboPhongBan_Loc.Enabled = false;
             }
         }
+
+        private void cboPhongBan_Loc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string phongKey = GetKeyFromCombobox(cboPhongBan_Loc.SelectedItem.ToString());
+
+            if (!ckLocLoaiNV.Checked)
+                LoadDatagridview(DGVTypeLoad.Phong, phongKey);
+            else
+            {
+                string loaiKey;
+                if (cboLoaiNV.SelectedItem == null)
+                    loaiKey = "";
+                else
+                    loaiKey = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
+                LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong, phongKey, loaiKey);
+            }
+        }
+        private void cboLoaiNV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string loaiKey = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
+
+            if (!ckLocTheoPhong.Checked)
+                LoadDatagridview(DGVTypeLoad.LoaiNV, loaiKey);
+            else
+            {
+                string phongKey;
+                if (cboPhongBan_Loc.SelectedItem == null)
+                    phongKey = "";
+                else
+                    phongKey = GetKeyFromCombobox(cboPhongBan_Loc.SelectedItem.ToString());
+                LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong, phongKey, loaiKey);
+            }
+        }
+
+        private void cboLoai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpDateInput();
+        }
+
 
         string GetKeyFromCombobox(string value)
         {

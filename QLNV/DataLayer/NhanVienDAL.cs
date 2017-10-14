@@ -66,6 +66,9 @@ namespace QLNV.DataLayer
                 case DGVTypeLoad.LoaiNV:
                     dt = db.GetDataTable("SELECT * FROM NHANVIEN WHERE MaLoaiNV = '" + maLoai + "'");
                     break;
+                case DGVTypeLoad.Loai_Phong:
+                    dt = db.GetDataTable("SELECT * FROM NHANVIEN WHERE MaLoaiNV = '" + maLoai + "' AND MAPHONG = '" + maPhong + "'");
+                    break;
             }
           
             List<NhanVien> list = new List<NhanVien>();
