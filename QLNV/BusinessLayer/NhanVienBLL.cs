@@ -16,12 +16,12 @@ namespace QLNV.BusinessLayer
             string id = NhanVienDAL.GetLastID().Trim();
             if (id == "")
             {
-                return "NV00000001";
+                return "MANV000001";
             }
-            int nextID = int.Parse(id.Remove(0, "NV".Length)) + 1;
-            id = "0000000" + nextID.ToString();
-            id = id.Substring(id.Length -8, 8);
-            return "NV" + id;
+            int nextID = int.Parse(id.Remove(0, "MANV".Length)) + 1;
+            id = "000000" + nextID.ToString();
+            id = id.Substring(id.Length -6, 6);
+            return "MANV" + id;
         }
 
         public static bool ThemNV(NhanVien NV)
@@ -34,6 +34,27 @@ namespace QLNV.BusinessLayer
             //}
             //return false;
             return true;
+        }
+
+        public static bool ThemNV(NhanVienBienChe NV)
+        {
+            DataTable dt = NhanVienDAL.ThemNhanVien(NV);
+            return true;
+        }
+
+        public static bool ThemNV(NhanVienCongNhat NV)
+        {
+            DataTable dt = NhanVienDAL.ThemNhanVien(NV);
+            return true;
+        }
+        public static bool CapNhatNhanVien(NhanVien NV)
+        {
+            return NhanVienDAL.CapNhatNhanVien(NV);
+        }
+
+        public static void XoaNhanVien(string maNV)
+        {
+            NhanVienDAL.XoaNhanVien(maNV);
         }
 
         public static List<NhanVien> GetList()

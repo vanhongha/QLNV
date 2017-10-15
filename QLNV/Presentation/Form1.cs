@@ -37,13 +37,24 @@ namespace QLNV
             LoaiNhanVienBLL.LoaiNVToCombobox(cboLoai);
 
             LoadDatagridview(DGVTypeLoad.None);
+            ClearAllInput();
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            string maLoai = GetKeyFromCombobox(cboLoai.SelectedItem.ToString());
-            string maPhong = GetKeyFromCombobox(cboPhongBan.SelectedItem.ToString());
-            NhanVien NV = new NhanVien(currentMaNV,
+            string maLoai, maPhong;
+            try
+            {
+                maLoai = GetKeyFromCombobox(cboLoai.SelectedItem.ToString());
+            }
+            catch { maLoai = ""; }
+            try
+            {
+                maPhong = GetKeyFromCombobox(cboPhongBan.SelectedItem.ToString());
+            }
+            catch { maPhong = ""; }
+
+            NhanVien NV = new NhanVien(txtMaNV.Text.Trim(),
                 txtTenNV.Text,
                 dtNgaySinh.Value.Date,
                 txtSDTNV.Text,
@@ -53,10 +64,19 @@ namespace QLNV
             {
                 if (NhanVienBLL.ThemNV(NV))
                 {
+                    LoadDatagridview(DGVTypeLoad.None);
                     MessageBox.Show("Đã thêm nhân viên thành công", "Thông báo", MessageBoxButtons.OK);
-                    currentMaNV = NhanVienBLL.AutoMaNV();
-                    txtMaNV.Text = currentMaNV;
-                    ClearAllInput();
+                    //currentMaNV = NhanVienBLL.AutoMaNV();
+                    //txtMaNV.Text = currentMaNV;
+                    //ClearAllInput();
+                    btnThem.Enabled = false;
+                    btnSua.Enabled = true;
+                    btnXoa.Enabled = true;
+
+                    if (maLoai == "MALNV00001")
+                        themNhanVienBienChe(NV.MaNV);
+                    else
+                        themNhanVienCongNhat(NV.MaNV);
                 }
                 else
                     MessageBox.Show("Lỗi chưa xác định", "Thông báo", MessageBoxButtons.OK);
@@ -67,28 +87,84 @@ namespace QLNV
             }
         }
 
+        void themNhanVienBienChe(string maNV)
+        {
+            NhanVienBienChe NVBC = new NhanVienBienChe(
+                maNV,
+                float.Parse(txtBL_SNL.Text),
+                decimal.Parse(txtPC_LN.Text),
+                decimal.Parse(txtLuongThang.Text));
+            NhanVienBienCheBLL.ThemNhanVienBC(NVBC);
+        }
+
+        void themNhanVienCongNhat(string maNV)
+        {
+            NhanVienCongNhat NVCN = new NhanVienCongNhat(
+                maNV,
+                float.Parse(txtBL_SNL.Text),
+                decimal.Parse(txtPC_LN.Text));
+
+            NhanVienCongNhatBLL.ThemNhanVienCN(NVCN);
+        }
+
+        void capNhatNhanVienBienChe(string maNV)
+        {
+            NhanVienBienChe NVBC = new NhanVienBienChe(
+                maNV,
+                float.Parse(txtBL_SNL.Text),
+                decimal.Parse(txtPC_LN.Text),
+                decimal.Parse(txtLuongThang.Text));
+            NhanVienBienCheBLL.CapNhatNhanVienBC(NVBC);
+        }
+
+        void capNhatNhanVienCongNhat(string maNV)
+        {
+            NhanVienCongNhat NVCN = new NhanVienCongNhat(
+                maNV,
+                float.Parse(txtBL_SNL.Text),
+                decimal.Parse(txtPC_LN.Text));
+
+            NhanVienCongNhatBLL.CapNhatNhanVienCN(NVCN);
+        }
+
+        void UpdateVisibleProperty(bool value)
+        {
+            lbPC_LN.Visible = value;
+            lbBL_SNL.Visible = value;
+            txtBL_SNL.Visible = value;
+            txtPC_LN.Visible = value;
+            lbLuongThang.Visible = value;
+            txtLuongThang.Visible = value;
+        }
+
         void UpDateInput()
         {
             if ((cboLoaiNV.Text.Trim()) != null)
             {
-                if (GetKeyFromCombobox(cboLoai.SelectedItem.ToString()).Equals("Ma1"))
+                if (GetKeyFromCombobox(cboLoai.SelectedItem.ToString()).Equals("MALNV00001"))
                 {
-                    lbBL_NgayLam.Text = "Ngày làm:";
-                    lbPhuCap.Visible = false;
-                    txtPhuCap.Visible = false;
+                    lbBL_SNL.Text = "Bậc lương:";
+                    lbPC_LN.Text = "Phụ cấp:";
+
+                    lbLuongThang.Visible = true;
+                    txtLuongThang.Visible = true;
                 }
                 else
                 {
-                    lbBL_NgayLam.Text = "Bậc lương:";
-                    lbPhuCap.Visible = true;
-                    txtPhuCap.Visible = true;
+                    lbBL_SNL.Text = "Số ngày làm việc:";
+                    lbPC_LN.Text = "Lương ngày:";
+                    txtLuongThang.Visible = false;
+                    lbLuongThang.Visible = false;
                 }
             }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            ClearAllInput();
+            NhanVienBLL.XoaNhanVien(txtMaNV.Text.Trim());
+            LoadDatagridview(DGVTypeLoad.None);
+            MessageBox.Show("Đã xóa thành công", "Thông báo", MessageBoxButtons.OK);
+            LamMoi();
         }
 
         void LoadDatagridview(DGVTypeLoad type, string key = null)
@@ -140,6 +216,11 @@ namespace QLNV
             txtTenNV.Text = "";
             txtSDTNV.Text = "";
             cboPhongBan.Text = "";
+            cboLoai.Text = "";
+
+            txtBL_SNL.Text = "0";
+            txtLuongThang.Text = "0";
+            txtPC_LN.Text = "0";
         }
 
         private void ckLocLoaiNV_CheckedChanged(object sender, EventArgs e)
@@ -208,6 +289,8 @@ namespace QLNV
 
         private void cboLoai_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!lbBL_SNL.Visible)
+                UpdateVisibleProperty(true);
             UpDateInput();
         }
 
@@ -220,7 +303,80 @@ namespace QLNV
                 code = code.Substring(0, code.Length - 2);
                 return code;
             }
-            return null;
+            return "";
+        }
+
+        private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void btnLamMoi_Click(object sender, EventArgs e)
+        {
+            LamMoi();
+        }
+
+        void LamMoi()
+        {
+            ClearAllInput();
+            txtMaNV.Text = NhanVienBLL.AutoMaNV();
+            UpdateVisibleProperty(false);
+
+            btnXoa.Enabled = false;
+            btnSua.Enabled = false;
+            btnThem.Enabled = true;
+            cboLoai.Enabled = true;
+        }
+
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            txtMaNV.Text = dgv.Rows[e.RowIndex].Cells[0].Value.ToString().Trim();
+            txtTenNV.Text = dgv.Rows[e.RowIndex].Cells[1].Value.ToString().Trim();
+            txtSDTNV.Text = dgv.Rows[e.RowIndex].Cells[3].Value.ToString().Trim();
+            dtNgaySinh.Value = Convert.ToDateTime(dgv.Rows[e.RowIndex].Cells[2].Value.ToString().Trim());
+            //cboLoai.SelectedValue = dgv.Rows[e.RowIndex].Cells[4].Value.ToString().Trim();
+            cboLoai.Text = LoaiNhanVienBLL.LayTenLoaiTheoMa(dgv.Rows[e.RowIndex].Cells[4].Value.ToString().Trim()).Trim();
+            //cboPhongBan.SelectedValue = dgv.Rows[e.RowIndex].Cells[6].Value.ToString().Trim();
+            cboPhongBan.Text = PhongBanBLL.LayTenPBTheoMa(dgv.Rows[e.RowIndex].Cells[6].Value.ToString().Trim()).Trim();
+
+            btnXoa.Enabled = true;
+            btnSua.Enabled = true;
+            btnThem.Enabled = false;
+            cboLoai.Enabled = false;
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            string maLoai = GetKeyFromCombobox(cboLoai.SelectedItem.ToString());
+            string maPhong = GetKeyFromCombobox(cboPhongBan.SelectedItem.ToString());
+            NhanVien NV = new NhanVien(txtMaNV.Text.Trim(),
+                txtTenNV.Text,
+                dtNgaySinh.Value.Date,
+                txtSDTNV.Text,
+                maLoai,
+                maPhong);
+            try
+            {
+                if (NhanVienBLL.CapNhatNhanVien(NV))
+                {
+                    LoadDatagridview(DGVTypeLoad.None);
+                    MessageBox.Show("Đã cập nhật nhân viên thành công", "Thông báo", MessageBoxButtons.OK);
+                    if (maLoai == "MALNV00001")
+                        capNhatNhanVienBienChe(NV.MaNV);
+                    else
+                        capNhatNhanVienCongNhat(NV.MaNV);
+                }
+                else
+                    MessageBox.Show("Lỗi chưa xác định", "Thông báo", MessageBoxButtons.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        void TinhLuong()
+        {
+
         }
     }
 }

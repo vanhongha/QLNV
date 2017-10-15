@@ -46,10 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLayer\LoaiNhanVienBLL.cs" />
+    <Compile Include="BusinessLayer\NhanVienBienCheBLL.cs" />
     <Compile Include="BusinessLayer\NhanVienBLL.cs" />
+    <Compile Include="BusinessLayer\NhanVienCongNhatBLL.cs" />
+    <Compile Include="DataLayer\NhanVienCongNhatDAL.cs" />
     <Compile Include="BusinessLayer\PhongBanBLL.cs" />
     <Compile Include="DataLayer\DataAccessHelper.cs" />
     <Compile Include="DataLayer\LoaiNhanVienDAL.cs" />
+    <Compile Include="DataLayer\NhanVienBienCheDAL.cs" />
     <Compile Include="DataLayer\NhanVienDAL.cs" />
     <Compile Include="DataLayer\PhongBanDAL.cs" />
     <Compile Include="Entities\LoaiNhanVien.cs" />

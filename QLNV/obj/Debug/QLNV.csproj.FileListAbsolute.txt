@@ -23,3 +23,11 @@ C:\Users\Hong Ha\Desktop\QLNV\QLNV\obj\Debug\QLNV.Presentation.LietKe.resources
 D:\Git\QLNV\QLNV\bin\Debug\QLNV.exe.config
 D:\Git\QLNV\QLNV\obj\Debug\QLNV.exe
 D:\Git\QLNV\QLNV\obj\Debug\QLNV.pdb
+D:\Git\QLNV\QLNV\bin\Debug\QLNV.exe
+D:\Git\QLNV\QLNV\bin\Debug\QLNV.pdb
+D:\Git\QLNV\QLNV\obj\Debug\QLNV.csprojResolveAssemblyReference.cache
+D:\Git\QLNV\QLNV\obj\Debug\QLNV.Form1.resources
+D:\Git\QLNV\QLNV\obj\Debug\QLNV.Presentation.CapNhat.resources
+D:\Git\QLNV\QLNV\obj\Debug\QLNV.Presentation.LietKe.resources
+D:\Git\QLNV\QLNV\obj\Debug\QLNV.Properties.Resources.resources
+D:\Git\QLNV\QLNV\obj\Debug\QLNV.csproj.GenerateResource.Cache

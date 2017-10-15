@@ -31,6 +31,49 @@ namespace QLNV.DataLayer
             return db.dt;
         }
 
+        public static bool CapNhatNhanVien(NhanVien NV)
+        {
+            try
+            {
+                DataAccessHelper db = new DataAccessHelper();
+                SqlCommand cmd = db.Command("CapNhatNhanVien");
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MaNV", NV.MaNV);
+                cmd.Parameters.AddWithValue("@TenNV", NV.HoTen);
+                cmd.Parameters.AddWithValue("@SoDT", NV.SDT);
+                cmd.Parameters.AddWithValue("@NgaySinh", NV.NgaySinh);
+                cmd.Parameters.AddWithValue("@MaPhong", NV.MaPhong);
+                cmd.Parameters.AddWithValue("@MaLoaiNV", NV.MaLoaiNV);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                db.dt = new DataTable();
+                da.Fill(db.dt);
+            }
+            catch { return false; }
+            return true;
+        }
+
+        public static void XoaNhanVien(string maNV)
+        {
+            try
+            {
+                DataAccessHelper db = new DataAccessHelper();
+                SqlCommand cmd = db.Command("XoaNhanVien");
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MaNV", maNV);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                db.dt = new DataTable();
+                da.Fill(db.dt);
+            }
+            catch
+            {
+                MessageBox.Show("Đã xảy ra lỗi, vui lòng kiểm tra lại", "Thông báo", MessageBoxButtons.OK);
+            }
+        }
+
         public static string GetLastID()
         {
             DataAccessHelper db = new DataAccessHelper();

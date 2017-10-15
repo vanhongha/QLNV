@@ -18,5 +18,16 @@ namespace QLNV.DataLayer
             }
             return list;
         }
+
+        public static string LayTenLoaiTheoMa(string maLoai)
+        {
+            DataAccessHelper db = new DataAccessHelper();
+            DataTable dt = db.GetDataTable("Select TenLoaiNV from LOAINHANVIEN where MaLoaiNV = '"+ maLoai+ "'");
+            foreach (DataRow row in dt.Rows)
+            {
+                return row.ItemArray[0].ToString();
+            }
+            return "";
+        }
     }
 }

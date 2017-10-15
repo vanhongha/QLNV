@@ -84,5 +84,9 @@ namespace QLNV.Entities
             maLoaiNV = row["MaLoaiNV"].ToString();
             this.maPhong = row["MaPhong"].ToString();
         }
+
+        public NhanVien()
+        {
+        }
     }
 }

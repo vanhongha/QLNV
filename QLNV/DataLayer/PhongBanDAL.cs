@@ -18,5 +18,15 @@ namespace QLNV.DataLayer
             }
             return list;
         }
+        public static string LayTenPBTheoMa(string maPB)
+        {
+            DataAccessHelper db = new DataAccessHelper();
+            DataTable dt = db.GetDataTable("Select TenPhong from PHONGBAN where MaPhong = '" + maPB + "'");
+            foreach (DataRow row in dt.Rows)
+            {
+                return row.ItemArray[0].ToString();
+            }
+            return "";
+        }
     }
 }

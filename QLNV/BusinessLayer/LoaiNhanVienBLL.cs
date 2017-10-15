@@ -22,5 +22,10 @@ namespace QLNV.BusinessLayer
                 comboBox.Items.Add(new { Text = loaiNV.TenLoai.Trim(), Value = loaiNV.MaLoai.ToString().Trim() });
             }
         }
+
+        public static string LayTenLoaiTheoMa(string maLoai)
+        {
+           return LoaiNhanVienDAL.LayTenLoaiTheoMa(maLoai);
+        }
     }
 }

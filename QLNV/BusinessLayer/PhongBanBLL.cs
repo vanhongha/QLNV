@@ -25,5 +25,9 @@ namespace QLNV.BusinessLayer
                 comboBox.Items.Add(new { Text = pb.TenPhong.Trim(), Value = pb.MaPhong.Trim() });
             }
         }
+        public static string LayTenPBTheoMa(string maPB)
+        {
+            return PhongBanDAL.LayTenPBTheoMa(maPB);
+        }
     }
 }

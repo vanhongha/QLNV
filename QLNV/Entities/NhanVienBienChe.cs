@@ -16,11 +16,19 @@ namespace QLNV.Entities
             set { bacLuong = value; }
         }
 
-        private decimal phuCap;
-
         public NhanVienBienChe(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV, string _maPhong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong)
         {
         }
+
+        public NhanVienBienChe(string _maNV, float _bacLuong, decimal _phuCap, decimal _luongThang)
+        {
+            phuCap = _phuCap;
+            bacLuong = _bacLuong;
+            MaNV = _maNV;
+            luongThang = _luongThang;
+        }
+
+        private decimal phuCap;
 
         public decimal PhuCap
         {
@@ -28,6 +36,13 @@ namespace QLNV.Entities
             set { phuCap = value; }
         }
 
+        private decimal luongThang;
+
+        public decimal LuongThang
+        {
+            get { return luongThang; }
+            set { luongThang = value; }
+        }
 
     }
 }
