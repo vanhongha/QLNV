@@ -12,11 +12,18 @@ namespace QLNV
         None,
         Phong,
         LoaiNV,
-        Loai_Phong
+        Luong,
+        Loai_Phong,
+        Luong_Loai,
+        Luong_Phong,
+        All
     }
     public partial class Form1 : Form
     {
         string currentMaNV;
+        string currentKeyMaPhong;
+        string currentKeyLoaiNV;
+
         public Form1()
         {
             InitializeComponent();
@@ -43,6 +50,7 @@ namespace QLNV
         private void btnThem_Click(object sender, EventArgs e)
         {
             string maLoai, maPhong;
+            decimal luong = 0;
             try
             {
                 maLoai = GetKeyFromCombobox(cboLoai.SelectedItem.ToString());
@@ -59,7 +67,8 @@ namespace QLNV
                 dtNgaySinh.Value.Date,
                 txtSDTNV.Text,
                 maLoai,
-                maPhong);
+                maPhong,
+                luong);
             try
             {
                 if (NhanVienBLL.ThemNV(NV))
@@ -180,18 +189,18 @@ namespace QLNV
                 case DGVTypeLoad.LoaiNV:
                     dgv.DataSource = NhanVienBLL.GetListTheoKey(type, "", key);
                     break;
-                case DGVTypeLoad.Loai_Phong:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, "", key);
+                case DGVTypeLoad.Luong:
+                    dgv.DataSource = NhanVienBLL.GetListTheoKey(DGVTypeLoad.Luong);
                     break;
             }
          
-            dgv.Columns[0].HeaderText = "Mã NV";
-            dgv.Columns[1].HeaderText = "Họ tên";
-            dgv.Columns[2].HeaderText = "Ngày sinh";
-            dgv.Columns[3].HeaderText = "Điện thoại";
-            dgv.Columns[4].HeaderText = "Loại NV";
-            dgv.Columns[5].HeaderText = "Lương";
-            dgv.Columns[6].HeaderText = "Mã Phòng";
+            //dgv.Columns[0].HeaderText = "Mã NV";
+            //dgv.Columns[1].HeaderText = "Họ tên";
+            //dgv.Columns[2].HeaderText = "Ngày sinh";
+            //dgv.Columns[3].HeaderText = "Điện thoại";
+            //dgv.Columns[4].HeaderText = "Loại NV";
+            //dgv.Columns[5].HeaderText = "Lương";
+            //dgv.Columns[6].HeaderText = "Mã Phòng";
         }
 
         void LoadDatagridviewMultipleChoice(DGVTypeLoad type, string maPhong = null, string maLoaiNV = null, string thang= null, string nam = null)
@@ -199,6 +208,15 @@ namespace QLNV
             switch (type)
             {
                 case DGVTypeLoad.Loai_Phong:
+                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, maPhong, maLoaiNV);
+                    break;
+                case DGVTypeLoad.Luong_Phong:
+                    dgv.DataSource= NhanVienBLL.GetListTheoKey(type, maPhong);
+                    break;
+                case DGVTypeLoad.Luong_Loai:
+                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, null, maLoaiNV);
+                    break;
+                case DGVTypeLoad.All:
                     dgv.DataSource = NhanVienBLL.GetListTheoKey(type, maPhong, maLoaiNV);
                     break;
             }
@@ -223,41 +241,92 @@ namespace QLNV
             txtPC_LN.Text = "0";
         }
 
+#region FILTER
         private void ckLocLoaiNV_CheckedChanged(object sender, EventArgs e)
         {
             if (ckLocLoaiNV.Checked)
             {
-                if (!ckLocTheoPhong.Checked)
+                if (!ckLocTheoPhong.Checked && !ckLocLuong.Checked)
                     LoadDatagridview(DGVTypeLoad.LoaiNV);
-                else
+                else if (ckLocTheoPhong.Checked && !ckLocLuong.Checked)
                     LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong);
+                else if (!ckLocTheoPhong.Checked && ckLocLuong.Checked)
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.Luong_Loai);
+                else
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.All);
                 cboLoaiNV.Enabled = true;
             }
             else
             {
-                cboLoaiNV.Enabled = true;
+                if (!ckLocTheoPhong.Checked && !ckLocLuong.Checked)
+                    LoadDatagridview(DGVTypeLoad.None);
+                else if (ckLocTheoPhong.Checked && !ckLocLuong.Checked)
+                    LoadDatagridview(DGVTypeLoad.Phong);
+                else if (!ckLocTheoPhong.Checked && ckLocLuong.Checked)
+                    LoadDatagridview(DGVTypeLoad.Luong);
+                else LoadDatagridview(DGVTypeLoad.Luong_Phong);
+                cboLoaiNV.Enabled = false;
             }
         }
+
         private void ckLocTheoPhong_CheckedChanged(object sender, EventArgs e)
         {
             if (ckLocTheoPhong.Checked)
             {
-                if (!ckLocLoaiNV.Checked)
+                if (!ckLocLoaiNV.Checked && !ckLocLuong.Checked)
                     LoadDatagridview(DGVTypeLoad.Phong);
-                else
+                else if (ckLocLoaiNV.Checked && !ckLocLuong.Checked)
                     LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong);
+                else if (!ckLocLoaiNV.Checked && ckLocLuong.Checked)
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.Luong_Phong);
+                else
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.All);
                 cboPhongBan_Loc.Enabled = true;
             }
             else
             {
+                if (!ckLocLoaiNV.Checked && !ckLocLuong.Checked)
+                    LoadDatagridview(DGVTypeLoad.None);
+                else if (ckLocLoaiNV.Checked && !ckLocLuong.Checked)
+                    LoadDatagridview(DGVTypeLoad.LoaiNV);
+                else if (!ckLocLoaiNV.Checked && ckLocLuong.Checked)
+                    LoadDatagridview(DGVTypeLoad.Luong);
+                else
+                    LoadDatagridview(DGVTypeLoad.Luong_Loai);
                 cboPhongBan_Loc.Enabled = false;
+                cboPhongBan_Loc.Text = "";
+            }
+        }
+
+        private void ckLocLuong_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckLocLuong.Checked)
+            {
+                if (!ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
+                    LoadDatagridview(DGVTypeLoad.Luong);
+                else if (ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
+                    LoadDatagridview(DGVTypeLoad.Luong_Loai);
+                else if (!ckLocLoaiNV.Checked && ckLocTheoPhong.Checked)
+                    LoadDatagridview(DGVTypeLoad.Luong_Phong);
+                else
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.All);
+            }
+            else
+            {
+                if (!ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
+                    LoadDatagridview(DGVTypeLoad.None);
+                else if (ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
+                    LoadDatagridview(DGVTypeLoad.LoaiNV);
+                else if (!ckLocLoaiNV.Checked && ckLocTheoPhong.Checked)
+                    LoadDatagridview(DGVTypeLoad.Phong);
+                else
+                    LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong);   
             }
         }
 
         private void cboPhongBan_Loc_SelectedIndexChanged(object sender, EventArgs e)
         {
             string phongKey = GetKeyFromCombobox(cboPhongBan_Loc.SelectedItem.ToString());
-
             if (!ckLocLoaiNV.Checked)
                 LoadDatagridview(DGVTypeLoad.Phong, phongKey);
             else
@@ -286,6 +355,7 @@ namespace QLNV
                 LoadDatagridviewMultipleChoice(DGVTypeLoad.Loai_Phong, phongKey, loaiKey);
             }
         }
+#endregion
 
         private void cboLoai_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -353,7 +423,8 @@ namespace QLNV
                 dtNgaySinh.Value.Date,
                 txtSDTNV.Text,
                 maLoai,
-                maPhong);
+                maPhong,
+                0);
             try
             {
                 if (NhanVienBLL.CapNhatNhanVien(NV))
@@ -378,5 +449,7 @@ namespace QLNV
         {
 
         }
+
+
     }
 }

@@ -49,11 +49,11 @@
     <Compile Include="BusinessLayer\NhanVienBienCheBLL.cs" />
     <Compile Include="BusinessLayer\NhanVienBLL.cs" />
     <Compile Include="BusinessLayer\NhanVienCongNhatBLL.cs" />
-    <Compile Include="DataLayer\NhanVienCongNhatDAL.cs" />
     <Compile Include="BusinessLayer\PhongBanBLL.cs" />
     <Compile Include="DataLayer\DataAccessHelper.cs" />
     <Compile Include="DataLayer\LoaiNhanVienDAL.cs" />
     <Compile Include="DataLayer\NhanVienBienCheDAL.cs" />
+    <Compile Include="DataLayer\NhanVienCongNhatDAL.cs" />
     <Compile Include="DataLayer\NhanVienDAL.cs" />
     <Compile Include="DataLayer\PhongBanDAL.cs" />
     <Compile Include="Entities\LoaiNhanVien.cs" />
@@ -67,29 +67,11 @@
     <Compile Include="Presentation\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\CapNhat.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\CapNhat.Designer.cs">
-      <DependentUpon>CapNhat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\LietKe.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\LietKe.Designer.cs">
-      <DependentUpon>LietKe.cs</DependentUpon>
-    </Compile>
     <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ultilities\ControlFormat.cs" />
     <EmbeddedResource Include="Presentation\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\CapNhat.resx">
-      <DependentUpon>CapNhat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\LietKe.resx">
-      <DependentUpon>LietKe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

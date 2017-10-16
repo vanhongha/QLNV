@@ -26,7 +26,7 @@ namespace QLNV.Entities
             set { luongNgay = value; }
         }
 
-        public NhanVienCongNhat(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV, string _maPhong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong)
+        public NhanVienCongNhat(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV, string _maPhong, decimal _luong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong, _luong)
         {
             MaNV = _maNV;
             HoTen = _hoTen;

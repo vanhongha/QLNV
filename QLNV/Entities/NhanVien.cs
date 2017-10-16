@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QLNV.Entities
 {
@@ -65,7 +66,7 @@ namespace QLNV.Entities
             set { maPhong = value; }
         }
 
-        public NhanVien(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV,string _maPhong)
+        public NhanVien(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV,string _maPhong, decimal _luong)
         {
             maNV = _maNV;
             hoTen = _hoTen;
@@ -73,16 +74,21 @@ namespace QLNV.Entities
             sdt = _sdt;
             MaLoaiNV = _maLoaiNV;
             maPhong = _maPhong;
+            luong = _luong;
         }
 
         public NhanVien(DataRow row)
         {
-            this.maNV = row["MaNV"].ToString();
-            this.hoTen = row["TenNV"].ToString();
-            this.sdt = row["SoDT"].ToString();
-            this.ngaySinh = (DateTime)row["NgaySinh"];
+            maNV = row["MaNV"].ToString();
+            hoTen = row["TenNV"].ToString();
+            sdt = row["SoDT"].ToString();
+            ngaySinh = (DateTime)row["NgaySinh"];
             maLoaiNV = row["MaLoaiNV"].ToString();
-            this.maPhong = row["MaPhong"].ToString();
+            maPhong = row["MaPhong"].ToString();
+            if (row["Luong"].ToString() == "")
+                luong = 0;
+            else
+                luong = decimal.Parse(row["Luong"].ToString());
         }
 
         public NhanVien()

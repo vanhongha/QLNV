@@ -16,16 +16,16 @@ namespace QLNV.Entities
             set { bacLuong = value; }
         }
 
-        public NhanVienBienChe(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV, string _maPhong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong)
-        {
-        }
-
         public NhanVienBienChe(string _maNV, float _bacLuong, decimal _phuCap, decimal _luongThang)
         {
             phuCap = _phuCap;
             bacLuong = _bacLuong;
             MaNV = _maNV;
             luongThang = _luongThang;
+        }
+
+        public NhanVienBienChe(string _maNV, string _hoTen, DateTime _ngaySinh, string _sdt, string _maLoaiNV, string _maPhong, decimal _luong) : base(_maNV, _hoTen, _ngaySinh, _sdt, _maLoaiNV, _maPhong, _luong)
+        {
         }
 
         private decimal phuCap;
