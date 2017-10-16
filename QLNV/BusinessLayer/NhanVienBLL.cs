@@ -66,6 +66,17 @@ namespace QLNV.BusinessLayer
         {
             return NhanVienDAL.GetListTheoKey(type, maPhong, loaiLoai, thang);
         }
-        
+
+        public static void ThemLuong(string maNV, int thang, int nam, decimal luong)
+        {
+            NhanVienDAL.ThemLuong(maNV, thang, nam, luong);
+        }
+
+
+        public static void CapNhatLuong(string maNV, int thang, int nam, decimal luong)
+        {
+            NhanVienDAL.CapNhatLuong(maNV, thang, nam, luong);
+        }
+
     }
 }

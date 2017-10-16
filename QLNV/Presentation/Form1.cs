@@ -21,8 +21,6 @@ namespace QLNV
     public partial class Form1 : Form
     {
         string currentMaNV;
-        string currentKeyMaPhong;
-        string currentKeyLoaiNV;
 
         public Form1()
         {
@@ -75,17 +73,23 @@ namespace QLNV
                 {
                     LoadDatagridview(DGVTypeLoad.None);
                     MessageBox.Show("Đã thêm nhân viên thành công", "Thông báo", MessageBoxButtons.OK);
-                    //currentMaNV = NhanVienBLL.AutoMaNV();
-                    //txtMaNV.Text = currentMaNV;
-                    //ClearAllInput();
                     btnThem.Enabled = false;
                     btnSua.Enabled = true;
-                    btnXoa.Enabled = true;
+                    btnXoa.Enabled = true;                  
 
                     if (maLoai == "MALNV00001")
+                    {
                         themNhanVienBienChe(NV.MaNV);
+                        luong = decimal.Parse(txtPC_LN.Text) + decimal.Parse(txtLuongThang.Text) * decimal.Parse(txtBL_SNL.Text);
+                    }
                     else
+                    {
                         themNhanVienCongNhat(NV.MaNV);
+                        luong = decimal.Parse(txtPC_LN.Text) * decimal.Parse(txtBL_SNL.Text);
+                    }
+
+                    themLuong(NV.MaNV, luong);
+                    LoadDatagridview(DGVTypeLoad.None);
                 }
                 else
                     MessageBox.Show("Lỗi chưa xác định", "Thông báo", MessageBoxButtons.OK);
@@ -134,6 +138,11 @@ namespace QLNV
                 decimal.Parse(txtPC_LN.Text));
 
             NhanVienCongNhatBLL.CapNhatNhanVienCN(NVCN);
+        }
+
+        void themLuong(string maNV, decimal luong)
+        {
+            NhanVienBLL.ThemLuong(maNV, DateTime.Now.Month, DateTime.Now.Year, luong);
         }
 
         void UpdateVisibleProperty(bool value)

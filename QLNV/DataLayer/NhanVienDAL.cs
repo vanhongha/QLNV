@@ -133,5 +133,51 @@ namespace QLNV.DataLayer
             }
             return list;
         }
+
+        public static void ThemLuong(string maNV, int thang, int nam, decimal luong)
+        {
+            try
+            {
+                DataAccessHelper db = new DataAccessHelper();
+                SqlCommand cmd = db.Command("ThemLuong");
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MaNV", maNV);
+                cmd.Parameters.AddWithValue("@Thang", thang);
+                cmd.Parameters.AddWithValue("@Nam", nam);
+                cmd.Parameters.AddWithValue("@Luong", luong);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                db.dt = new DataTable();
+                da.Fill(db.dt);
+            }
+            catch
+            {
+                MessageBox.Show("Đã xảy ra lỗi, vui lòng kiểm tra lại", "Thông báo", MessageBoxButtons.OK);
+            }
+        }
+
+        public static void CapNhatLuong(string maNV, int thang, int nam, decimal luong)
+        {
+            try
+            {
+                DataAccessHelper db = new DataAccessHelper();
+                SqlCommand cmd = db.Command("CapNhatLuong");
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MaNV", maNV);
+                cmd.Parameters.AddWithValue("@Thang", thang);
+                cmd.Parameters.AddWithValue("@Nam", nam);
+                cmd.Parameters.AddWithValue("@Luong", luong);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                db.dt = new DataTable();
+                da.Fill(db.dt);
+            }
+            catch
+            {
+                MessageBox.Show("Đã xảy ra lỗi, vui lòng kiểm tra lại", "Thông báo", MessageBoxButtons.OK);
+            }
+        }
     }
 }
