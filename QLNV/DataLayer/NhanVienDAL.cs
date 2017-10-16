@@ -110,19 +110,19 @@ namespace QLNV.DataLayer
                     dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "'");
                     break;
                 case DGVTypeLoad.Luong:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV ORDER BY l.Luong DESC");
+                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
                     break;
                 case DGVTypeLoad.Loai_Phong:
                     dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' AND MAPHONG = '" + maPhong + "'");
                     break;
                 case DGVTypeLoad.Luong_Phong:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MAPHONG = '" + maPhong + "' ORDER BY l.Luong DESC");
+                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MAPHONG = '" + maPhong + "' AND l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
                     break;
                 case DGVTypeLoad.Luong_Loai:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' ORDER BY l.Luong DESC");
+                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' AND l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
                     break;
                 case DGVTypeLoad.All:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' AND MAPHONG = '" + maPhong + "' ORDER BY l.Luong DESC");
+                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' AND MAPHONG = '" + maPhong + "' AND l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
                     break;
             }
           

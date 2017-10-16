@@ -463,6 +463,7 @@
             this.txtNam.Name = "txtNam";
             this.txtNam.Size = new System.Drawing.Size(100, 20);
             this.txtNam.TabIndex = 19;
+            this.txtNam.TextChanged += new System.EventHandler(this.txtNam_TextChanged);
             // 
             // comboBox2
             // 
@@ -525,6 +526,7 @@
             this.cboThang.Name = "cboThang";
             this.cboThang.Size = new System.Drawing.Size(89, 21);
             this.cboThang.TabIndex = 14;
+            this.cboThang.SelectedIndexChanged += new System.EventHandler(this.cboThang_SelectedIndexChanged);
             // 
             // button4
             // 
