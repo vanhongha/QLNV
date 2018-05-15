@@ -40,7 +40,7 @@ namespace QLNV.BusinessLayer
         }
 
 
-        public static bool CapNhatNhanVien(NhanVien NV)
+        public static bool CapNhatNhanVien(NHANVIEN NV)
         {
             return NhanVienDAL.CapNhatNhanVien(NV);
         }
@@ -63,12 +63,6 @@ namespace QLNV.BusinessLayer
         public static void ThemLuong(NHANVIEN NV, int thang, int nam, decimal luong)
         {
             NhanVienDAL.ThemLuong(NV, thang, nam, luong);
-        }
-
-
-        public static void CapNhatLuong(string maNV, int thang, int nam, decimal luong)
-        {
-            NhanVienDAL.CapNhatLuong(maNV, thang, nam, luong);
         }
 
     }

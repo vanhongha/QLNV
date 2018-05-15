@@ -27,6 +27,7 @@ namespace QLNV
         string locThang;
         string locNam;
         DataClassesDataContext db = new DataClassesDataContext();
+        const string nvCongNhat = "MALNV00002";
 
         public Form1()
         {
@@ -41,7 +42,7 @@ namespace QLNV
             locThang = "";
             locNam = "";
             cboPhongBan_Loc.Enabled = false;
-            cboLoaiNV.Enabled = false;
+            cboLoaiNV_Loc.Enabled = false;
             currentMaNV = NhanVienBLL.AutoMaNV();
             txtMaNV.Text = currentMaNV;
             cboThang.Enabled = false;
@@ -51,8 +52,8 @@ namespace QLNV
 
             PhongBanBLL.PhongBanToCombobox(cboPhongBan);
             PhongBanBLL.PhongBanToCombobox(cboPhongBan_Loc);
+            LoaiNhanVienBLL.LoaiNVToCombobox(cboLoaiNV_Loc);
             LoaiNhanVienBLL.LoaiNVToCombobox(cboLoaiNV);
-            LoaiNhanVienBLL.LoaiNVToCombobox(cboLoai);
 
             LoadDatagridview(DGVTypeLoad.None);
             ClearAllInput();
@@ -60,19 +61,20 @@ namespace QLNV
 
         void AddThangCombobox()
         {
-            for (int i=1;i<=12;i++)
+            for (int i = 1; i <= 12; i++)
             {
                 cboThang.Items.Add(i.ToString());
             }
         }
 
+        // LINQ TO SQL
         private void btnThem_Click(object sender, EventArgs e)
         {
             string maLoai, maPhong;
             decimal luong = 0;
             try
             {
-                maLoai = GetKeyFromCombobox(cboLoai.SelectedItem.ToString());
+                maLoai = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
             }
             catch { maLoai = ""; }
             try
@@ -97,22 +99,22 @@ namespace QLNV
                     btnSua.Enabled = true;
                     btnXoa.Enabled = true;
 
-                    if (maLoai == "MALNV00001")
+                    if (maLoai == nvCongNhat)
                     {
-                        NHANVIENBIENCHE nv = new NHANVIENBIENCHE(NV.MaNV,
-                            float.Parse(txtBL_SNL.Text),
-                            decimal.Parse(txtPC_LN.Text),
-                            decimal.Parse(txtLuongThang.Text));
-                        NhanVienBLL.ThemNVBienChe(nv);
-                        luong = decimal.Parse(txtPC_LN.Text) + decimal.Parse(txtLuongThang.Text) * decimal.Parse(txtBL_SNL.Text);
+                        NHANVIENCONGNHAT nv = new NHANVIENCONGNHAT(NV.MaNV,
+                              float.Parse(txtBacLuong_SoNgayLam.Text),
+                              decimal.Parse(txtPhuCap_LuongNgay.Text));
+                        NhanVienBLL.ThemNVCongNhat(nv);
+                        luong = decimal.Parse(txtPhuCap_LuongNgay.Text) * decimal.Parse(txtBacLuong_SoNgayLam.Text);                     
                     }
                     else
                     {
-                        NHANVIENCONGNHAT nv = new NHANVIENCONGNHAT(NV.MaNV,
-                            float.Parse(txtBL_SNL.Text),
-                            decimal.Parse(txtPC_LN.Text));
-                        NhanVienBLL.ThemNVCongNhat(nv);
-                        luong = decimal.Parse(txtPC_LN.Text) * decimal.Parse(txtBL_SNL.Text);
+                        NHANVIENBIENCHE nv = new NHANVIENBIENCHE(NV.MaNV,
+                            float.Parse(txtBacLuong_SoNgayLam.Text),
+                            decimal.Parse(txtPhuCap_LuongNgay.Text),
+                            decimal.Parse(txtLuongThang.Text));
+                        NhanVienBLL.ThemNVBienChe(nv);
+                        luong = decimal.Parse(txtPhuCap_LuongNgay.Text) + decimal.Parse(txtLuongThang.Text) * decimal.Parse(txtBacLuong_SoNgayLam.Text);
                     }
 
                     NhanVienBLL.ThemLuong(NV, DateTime.Now.Month, DateTime.Now.Year, luong);
@@ -127,61 +129,40 @@ namespace QLNV
             }
         }
 
-        void themNhanVienBienChe(string maNV)
+        void CapNhatNhanVienBienChe(string maNV)
         {
-            NhanVienBienChe NVBC = new NhanVienBienChe(
-                maNV,
-                float.Parse(txtBL_SNL.Text),
-                decimal.Parse(txtPC_LN.Text),
-                decimal.Parse(txtLuongThang.Text));
-            NhanVienBienCheBLL.ThemNhanVienBC(NVBC);
+            NHANVIENBIENCHE NV = DataAccessHelper.DB.NHANVIENBIENCHEs.Single(nv => nv.MaNV == maNV);
+            NV.LuongThang = decimal.Parse(txtLuongThang.Text);
+            NV.PhuCap = decimal.Parse(txtPhuCap_LuongNgay.Text);
+            NV.BacLuong = float.Parse(txtBacLuong_SoNgayLam.Text);
+
+            DataAccessHelper.DB.SubmitChanges();
         }
 
-        void themNhanVienCongNhat(string maNV)
+        void CapNhatNhanVienCongNhat(string maNV)
         {
-            NhanVienCongNhat NVCN = new NhanVienCongNhat(
-                maNV,
-                float.Parse(txtBL_SNL.Text),
-                decimal.Parse(txtPC_LN.Text));
+            NHANVIENCONGNHAT NV = DataAccessHelper.DB.NHANVIENCONGNHATs.Single(nv => nv.MaNV == maNV);
+            NV.LuongNgay = decimal.Parse(txtPhuCap_LuongNgay.Text);
+            NV.SoNgayLam = float.Parse(txtBacLuong_SoNgayLam.Text);
 
-            NhanVienCongNhatBLL.ThemNhanVienCN(NVCN);
-        }
-
-        void capNhatNhanVienBienChe(string maNV)
-        {
-            NhanVienBienChe NVBC = new NhanVienBienChe(
-                maNV,
-                float.Parse(txtBL_SNL.Text),
-                decimal.Parse(txtPC_LN.Text),
-                decimal.Parse(txtLuongThang.Text));
-            NhanVienBienCheBLL.CapNhatNhanVienBC(NVBC);
-        }
-
-        void capNhatNhanVienCongNhat(string maNV)
-        {
-            NhanVienCongNhat NVCN = new NhanVienCongNhat(
-                maNV,
-                float.Parse(txtBL_SNL.Text),
-                decimal.Parse(txtPC_LN.Text));
-
-            NhanVienCongNhatBLL.CapNhatNhanVienCN(NVCN);
+            DataAccessHelper.DB.SubmitChanges();
         }
 
         void UpdateVisibleProperty(bool value)
         {
             lbPC_LN.Visible = value;
             lbBL_SNL.Visible = value;
-            txtBL_SNL.Visible = value;
-            txtPC_LN.Visible = value;
+            txtBacLuong_SoNgayLam.Visible = value;
+            txtPhuCap_LuongNgay.Visible = value;
             lbLuongThang.Visible = value;
             txtLuongThang.Visible = value;
         }
 
         void UpDateInput()
         {
-            if ((cboLoaiNV.Text.Trim()) != null)
+            if ((cboLoaiNV_Loc.Text.Trim()) != null)
             {
-                if (GetKeyFromCombobox(cboLoai.SelectedItem.ToString()).Equals("MALNV00001"))
+                if (GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString()).Equals("MALNV00001"))
                 {
                     lbBL_SNL.Text = "Bậc lương:";
                     lbPC_LN.Text = "Phụ cấp:";
@@ -251,11 +232,11 @@ namespace QLNV
             txtTenNV.Text = "";
             txtSDTNV.Text = "";
             cboPhongBan.Text = "";
-            cboLoai.Text = "";
+            cboLoaiNV.Text = "";
 
-            txtBL_SNL.Text = "0";
+            txtBacLuong_SoNgayLam.Text = "0";
             txtLuongThang.Text = "0";
-            txtPC_LN.Text = "0";
+            txtPhuCap_LuongNgay.Text = "0";
         }
 
 #region FILTER
@@ -271,7 +252,7 @@ namespace QLNV
                     LoadDatagridview(DGVTypeLoad.Luong_Loai, locPhongKey, locLoaiKey, locThang, locNam);
                 else
                     LoadDatagridview(DGVTypeLoad.All, locPhongKey, locLoaiKey, locThang, locNam);
-                cboLoaiNV.Enabled = true;
+                cboLoaiNV_Loc.Enabled = true;
             }
             else
             {
@@ -282,7 +263,7 @@ namespace QLNV
                 else if (!ckLocTheoPhong.Checked && ckLocLuong.Checked)
                     LoadDatagridview(DGVTypeLoad.Luong, locPhongKey, locLoaiKey, locThang, locNam);
                 else LoadDatagridview(DGVTypeLoad.Luong_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                cboLoaiNV.Enabled = false;
+                cboLoaiNV_Loc.Enabled = false;
             }
         }
 
@@ -356,17 +337,17 @@ namespace QLNV
             else
             {
                 string loaiKey;
-                if (cboLoaiNV.SelectedItem == null)
+                if (cboLoaiNV_Loc.SelectedItem == null)
                     loaiKey = "";
                 else
-                    loaiKey = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
+                    loaiKey = GetKeyFromCombobox(cboLoaiNV_Loc.SelectedItem.ToString());
                 LoadDatagridview(DGVTypeLoad.Loai_Phong, phongKey, loaiKey);
             }
         }
 
         private void cboLoaiNV_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string loaiKey = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
+            string loaiKey = GetKeyFromCombobox(cboLoaiNV_Loc.SelectedItem.ToString());
             locLoaiKey = loaiKey;
 
             if (!ckLocTheoPhong.Checked && !ckLocLuong.Checked)
@@ -444,45 +425,71 @@ namespace QLNV
             btnXoa.Enabled = false;
             btnSua.Enabled = false;
             btnThem.Enabled = true;
-            cboLoai.Enabled = true;
+            cboLoaiNV.Enabled = true;
         }
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             txtMaNV.Text = dgv.Rows[e.RowIndex].Cells[0].Value.ToString().Trim();
-            txtTenNV.Text = dgv.Rows[e.RowIndex].Cells[1].Value.ToString().Trim();
-            txtSDTNV.Text = dgv.Rows[e.RowIndex].Cells[3].Value.ToString().Trim();
-            dtNgaySinh.Value = Convert.ToDateTime(dgv.Rows[e.RowIndex].Cells[2].Value.ToString().Trim());
-            cboLoai.Text = LoaiNhanVienBLL.LayTenLoaiTheoMa(dgv.Rows[e.RowIndex].Cells[4].Value.ToString().Trim()).Trim();
-            cboPhongBan.Text = PhongBanBLL.LayTenPBTheoMa(dgv.Rows[e.RowIndex].Cells[6].Value.ToString().Trim()).Trim();
+
+            NHANVIEN nv = NhanVienDAL.GetNhanVien(txtMaNV.Text);
+
+            txtTenNV.Text = nv.TenNV;
+            txtSDTNV.Text = nv.SoDT;
+            dtNgaySinh.Value = Convert.ToDateTime(nv.NgaySinh);
+            cboLoaiNV.Text = LoaiNhanVienBLL.LayTenLoaiTheoMa(nv.MaLoaiNV).Trim();
+            cboPhongBan.Text = PhongBanBLL.LayTenPBTheoMa(nv.MaPhong).Trim();
+
+            if (string.Equals(nv.MaLoaiNV, nvCongNhat))
+            {
+                NHANVIENCONGNHAT NV = NhanVienDAL.GetNhanVienCongNhat(nv.MaNV);
+                if (NV != null)
+                {
+                    txtBacLuong_SoNgayLam.Text = NV.SoNgayLam.ToString();
+                    txtPhuCap_LuongNgay.Text = NV.LuongNgay.ToString();
+                }
+            }
+            else
+            {
+                NHANVIENBIENCHE NV = NhanVienDAL.GetNhanVienBienChe(nv.MaNV);
+                if (NV != null)
+                {
+                    txtLuongThang.Text = NV.LuongThang.ToString();
+                    txtBacLuong_SoNgayLam.Text = NV.BacLuong.ToString();
+                    txtPhuCap_LuongNgay.Text = NV.PhuCap.ToString();
+                }
+            }
 
             btnXoa.Enabled = true;
             btnSua.Enabled = true;
             btnThem.Enabled = false;
-            cboLoai.Enabled = false;
+            cboLoaiNV.Enabled = false;
         }
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            string maLoai = GetKeyFromCombobox(cboLoai.SelectedItem.ToString());
+            string maLoai = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
             string maPhong = GetKeyFromCombobox(cboPhongBan.SelectedItem.ToString());
-            NhanVien NV = new NhanVien(txtMaNV.Text.Trim(),
+            NHANVIEN NV = new NHANVIEN(txtMaNV.Text.Trim(),
                 txtTenNV.Text,
                 dtNgaySinh.Value.Date,
                 txtSDTNV.Text,
                 maLoai,
-                maPhong,
-                0);
+                maPhong);
             try
             {
                 if (NhanVienBLL.CapNhatNhanVien(NV))
                 {
                     LoadDatagridview(DGVTypeLoad.None);
-                    MessageBox.Show("Đã cập nhật nhân viên thành công", "Thông báo", MessageBoxButtons.OK);
-                    if (maLoai == "MALNV00001")
-                        capNhatNhanVienBienChe(NV.MaNV);
+
+                    if (maLoai == nvCongNhat)
+                        CapNhatNhanVienCongNhat(NV.MaNV);
                     else
-                        capNhatNhanVienCongNhat(NV.MaNV);
+                        CapNhatNhanVienBienChe(NV.MaNV);
+
+                    MessageBox.Show("Đã cập nhật nhân viên thành công", "Thông báo", MessageBoxButtons.OK);
+
+                    LoadDatagridview(DGVTypeLoad.None);
                 }
                 else
                     MessageBox.Show("Lỗi chưa xác định", "Thông báo", MessageBoxButtons.OK);

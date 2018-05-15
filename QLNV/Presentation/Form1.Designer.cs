@@ -33,7 +33,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtLuongThang = new System.Windows.Forms.TextBox();
             this.lbLuongThang = new System.Windows.Forms.Label();
-            this.cboLoai = new System.Windows.Forms.ComboBox();
+            this.cboLoaiNV = new System.Windows.Forms.ComboBox();
             this.cboPhongBan = new System.Windows.Forms.ComboBox();
             this.lbBL_SNL = new System.Windows.Forms.Label();
             this.btnSua = new System.Windows.Forms.Button();
@@ -44,9 +44,9 @@
             this.dtNgaySinh = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtPC_LN = new System.Windows.Forms.TextBox();
+            this.txtPhuCap_LuongNgay = new System.Windows.Forms.TextBox();
             this.lbPC_LN = new System.Windows.Forms.Label();
-            this.txtBL_SNL = new System.Windows.Forms.TextBox();
+            this.txtBacLuong_SoNgayLam = new System.Windows.Forms.TextBox();
             this.txtSDTNV = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtTenNV = new System.Windows.Forms.TextBox();
@@ -67,7 +67,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.cboThang = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.cboLoaiNV = new System.Windows.Forms.ComboBox();
+            this.cboLoaiNV_Loc = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.cboPhongBan_Loc = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -118,7 +118,7 @@
             // 
             this.panel2.Controls.Add(this.txtLuongThang);
             this.panel2.Controls.Add(this.lbLuongThang);
-            this.panel2.Controls.Add(this.cboLoai);
+            this.panel2.Controls.Add(this.cboLoaiNV);
             this.panel2.Controls.Add(this.cboPhongBan);
             this.panel2.Controls.Add(this.lbBL_SNL);
             this.panel2.Controls.Add(this.btnSua);
@@ -129,9 +129,9 @@
             this.panel2.Controls.Add(this.dtNgaySinh);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.txtPC_LN);
+            this.panel2.Controls.Add(this.txtPhuCap_LuongNgay);
             this.panel2.Controls.Add(this.lbPC_LN);
-            this.panel2.Controls.Add(this.txtBL_SNL);
+            this.panel2.Controls.Add(this.txtBacLuong_SoNgayLam);
             this.panel2.Controls.Add(this.txtSDTNV);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.txtTenNV);
@@ -164,18 +164,18 @@
             this.lbLuongThang.Text = "Lương Tháng:";
             this.lbLuongThang.Visible = false;
             // 
-            // cboLoai
+            // cboLoaiNV
             // 
-            this.cboLoai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLoai.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.cboLoai.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.cboLoai.FormattingEnabled = true;
-            this.cboLoai.Location = new System.Drawing.Point(12, 301);
-            this.cboLoai.Margin = new System.Windows.Forms.Padding(4);
-            this.cboLoai.Name = "cboLoai";
-            this.cboLoai.Size = new System.Drawing.Size(216, 28);
-            this.cboLoai.TabIndex = 86;
-            this.cboLoai.SelectedIndexChanged += new System.EventHandler(this.cboLoai_SelectedIndexChanged);
+            this.cboLoaiNV.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLoaiNV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.cboLoaiNV.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cboLoaiNV.FormattingEnabled = true;
+            this.cboLoaiNV.Location = new System.Drawing.Point(12, 301);
+            this.cboLoaiNV.Margin = new System.Windows.Forms.Padding(4);
+            this.cboLoaiNV.Name = "cboLoaiNV";
+            this.cboLoaiNV.Size = new System.Drawing.Size(216, 28);
+            this.cboLoaiNV.TabIndex = 86;
+            this.cboLoaiNV.SelectedIndexChanged += new System.EventHandler(this.cboLoai_SelectedIndexChanged);
             // 
             // cboPhongBan
             // 
@@ -285,14 +285,14 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Ngày sinh:";
             // 
-            // txtPC_LN
+            // txtPhuCap_LuongNgay
             // 
-            this.txtPC_LN.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPC_LN.Location = new System.Drawing.Point(12, 411);
-            this.txtPC_LN.Name = "txtPC_LN";
-            this.txtPC_LN.Size = new System.Drawing.Size(216, 27);
-            this.txtPC_LN.TabIndex = 11;
-            this.txtPC_LN.Visible = false;
+            this.txtPhuCap_LuongNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPhuCap_LuongNgay.Location = new System.Drawing.Point(12, 411);
+            this.txtPhuCap_LuongNgay.Name = "txtPhuCap_LuongNgay";
+            this.txtPhuCap_LuongNgay.Size = new System.Drawing.Size(216, 27);
+            this.txtPhuCap_LuongNgay.TabIndex = 11;
+            this.txtPhuCap_LuongNgay.Visible = false;
             // 
             // lbPC_LN
             // 
@@ -305,14 +305,14 @@
             this.lbPC_LN.Text = "Phụ cấp:";
             this.lbPC_LN.Visible = false;
             // 
-            // txtBL_SNL
+            // txtBacLuong_SoNgayLam
             // 
-            this.txtBL_SNL.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBL_SNL.Location = new System.Drawing.Point(12, 358);
-            this.txtBL_SNL.Name = "txtBL_SNL";
-            this.txtBL_SNL.Size = new System.Drawing.Size(216, 27);
-            this.txtBL_SNL.TabIndex = 11;
-            this.txtBL_SNL.Visible = false;
+            this.txtBacLuong_SoNgayLam.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBacLuong_SoNgayLam.Location = new System.Drawing.Point(12, 358);
+            this.txtBacLuong_SoNgayLam.Name = "txtBacLuong_SoNgayLam";
+            this.txtBacLuong_SoNgayLam.Size = new System.Drawing.Size(216, 27);
+            this.txtBacLuong_SoNgayLam.TabIndex = 11;
+            this.txtBacLuong_SoNgayLam.Visible = false;
             // 
             // txtSDTNV
             // 
@@ -411,7 +411,7 @@
             this.panel4.Controls.Add(this.label16);
             this.panel4.Controls.Add(this.cboThang);
             this.panel4.Controls.Add(this.button4);
-            this.panel4.Controls.Add(this.cboLoaiNV);
+            this.panel4.Controls.Add(this.cboLoaiNV_Loc);
             this.panel4.Controls.Add(this.button3);
             this.panel4.Controls.Add(this.cboPhongBan_Loc);
             this.panel4.Controls.Add(this.button2);
@@ -540,15 +540,15 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.btnSua_Click);
             // 
-            // cboLoaiNV
+            // cboLoaiNV_Loc
             // 
-            this.cboLoaiNV.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLoaiNV.FormattingEnabled = true;
-            this.cboLoaiNV.Location = new System.Drawing.Point(259, 41);
-            this.cboLoaiNV.Name = "cboLoaiNV";
-            this.cboLoaiNV.Size = new System.Drawing.Size(355, 21);
-            this.cboLoaiNV.TabIndex = 15;
-            this.cboLoaiNV.SelectedIndexChanged += new System.EventHandler(this.cboLoaiNV_SelectedIndexChanged);
+            this.cboLoaiNV_Loc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLoaiNV_Loc.FormattingEnabled = true;
+            this.cboLoaiNV_Loc.Location = new System.Drawing.Point(259, 41);
+            this.cboLoaiNV_Loc.Name = "cboLoaiNV_Loc";
+            this.cboLoaiNV_Loc.Size = new System.Drawing.Size(355, 21);
+            this.cboLoaiNV_Loc.TabIndex = 15;
+            this.cboLoaiNV_Loc.SelectedIndexChanged += new System.EventHandler(this.cboLoaiNV_SelectedIndexChanged);
             // 
             // button3
             // 
@@ -785,15 +785,15 @@
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnThem;
-        private System.Windows.Forms.TextBox txtBL_SNL;
-        private System.Windows.Forms.TextBox txtPC_LN;
+        private System.Windows.Forms.TextBox txtBacLuong_SoNgayLam;
+        private System.Windows.Forms.TextBox txtPhuCap_LuongNgay;
         private System.Windows.Forms.Label lbPC_LN;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cboThang;
-        private System.Windows.Forms.ComboBox cboLoaiNV;
+        private System.Windows.Forms.ComboBox cboLoaiNV_Loc;
         private System.Windows.Forms.ComboBox cboPhongBan_Loc;
         private System.Windows.Forms.CheckBox ckLocLuong;
         private System.Windows.Forms.CheckBox ckLocLoaiNV;
@@ -804,7 +804,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lbBL_SNL;
         private System.Windows.Forms.ComboBox cboPhongBan;
-        private System.Windows.Forms.ComboBox cboLoai;
+        private System.Windows.Forms.ComboBox cboLoaiNV;
         private System.Windows.Forms.TextBox txtLuongThang;
         private System.Windows.Forms.Label lbLuongThang;
         private System.Windows.Forms.TextBox textBox6;

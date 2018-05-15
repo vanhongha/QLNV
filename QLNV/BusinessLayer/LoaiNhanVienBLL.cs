@@ -18,11 +18,10 @@ namespace QLNV.BusinessLayer
         {
             comboBox.DisplayMember = "Text";
             comboBox.ValueMember = "Value";
-            using (DataClassesDataContext db = new DataClassesDataContext())
-                foreach (LOAINHANVIEN loaiNV in db.LOAINHANVIENs.ToList())
-                {
-                    comboBox.Items.Add(new { Text = loaiNV.TenLoaiNV.Trim(), Value = loaiNV.MaLoaiNV.ToString().Trim() });
-                }
+
+            foreach (LOAINHANVIEN loaiNV in DataAccessHelper.DB.LOAINHANVIENs.ToList())
+                comboBox.Items.Add(new { Text = loaiNV.TenLoaiNV.Trim(), Value = loaiNV.MaLoaiNV.ToString().Trim() });
+            
         }
 
         public static string LayTenLoaiTheoMa(string maLoai)
