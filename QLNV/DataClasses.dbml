@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLNV" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-54EQF0R\SQLEXPRESS;Initial Catalog=QLNV;Integrated Security=True" SettingsObjectName="QLNV.Properties.Settings" SettingsPropertyName="QLNVConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.LOAINHANVIEN" Member="LOAINHANVIENs">
+    <Type Name="LOAINHANVIEN">
+      <Column Name="MaLoaiNV" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenLoaiNV" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Association Name="LOAINHANVIEN_NHANVIEN" Member="NHANVIENs" ThisKey="MaLoaiNV" OtherKey="MaLoaiNV" Type="NHANVIEN" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LUONG" Member="LUONGs">
+    <Type Name="LUONG">
+      <Column Name="MaNV" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Thang" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nam" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Luong" Member="Luong1" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="NHANVIEN_LUONG" Member="NHANVIEN" ThisKey="MaNV" OtherKey="MaNV" Type="NHANVIEN" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NHANVIEN" Member="NHANVIENs">
+    <Type Name="NHANVIEN">
+      <Column Name="MaNV" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenNV" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SoDT" Type="System.String" DbType="NChar(15)" CanBeNull="true" />
+      <Column Name="NgaySinh" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="MaPhong" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="MaLoaiNV" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="NHANVIEN_LUONG" Member="LUONGs" ThisKey="MaNV" OtherKey="MaNV" Type="LUONG" />
+      <Association Name="NHANVIEN_NHANVIENBIENCHE" Member="NHANVIENBIENCHE" ThisKey="MaNV" OtherKey="MaNV" Type="NHANVIENBIENCHE" Cardinality="One" />
+      <Association Name="NHANVIEN_NHANVIENCONGNHAT" Member="NHANVIENCONGNHAT" ThisKey="MaNV" OtherKey="MaNV" Type="NHANVIENCONGNHAT" Cardinality="One" />
+      <Association Name="LOAINHANVIEN_NHANVIEN" Member="LOAINHANVIEN" ThisKey="MaLoaiNV" OtherKey="MaLoaiNV" Type="LOAINHANVIEN" IsForeignKey="true" />
+      <Association Name="PHONGBAN_NHANVIEN" Member="PHONGBAN" ThisKey="MaPhong" OtherKey="MaPhong" Type="PHONGBAN" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NHANVIENBIENCHE" Member="NHANVIENBIENCHEs">
+    <Type Name="NHANVIENBIENCHE">
+      <Column Name="MaNV" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LuongThang" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="BacLuong" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PhuCap" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="NHANVIEN_NHANVIENBIENCHE" Member="NHANVIEN" ThisKey="MaNV" OtherKey="MaNV" Type="NHANVIEN" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NHANVIENCONGNHAT" Member="NHANVIENCONGNHATs">
+    <Type Name="NHANVIENCONGNHAT">
+      <Column Name="MaNV" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LuongNgay" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="SoNgayLam" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="NHANVIEN_NHANVIENCONGNHAT" Member="NHANVIEN" ThisKey="MaNV" OtherKey="MaNV" Type="NHANVIEN" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PHONGBAN" Member="PHONGBANs">
+    <Type Name="PHONGBAN">
+      <Column Name="MaPhong" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenPhong" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Association Name="PHONGBAN_NHANVIEN" Member="NHANVIENs" ThisKey="MaPhong" OtherKey="MaPhong" Type="NHANVIEN" />
+    </Type>
+  </Table>
+</Database>

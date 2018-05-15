@@ -20,10 +20,11 @@ namespace QLNV.BusinessLayer
         {
             comboBox.DisplayMember = "Text";
             comboBox.ValueMember = "Value";
-            foreach (PhongBan pb in GetList())
-            {
-                comboBox.Items.Add(new { Text = pb.TenPhong.Trim(), Value = pb.MaPhong.Trim() });
-            }
+            using (DataClassesDataContext db = new DataClassesDataContext())
+                foreach (PHONGBAN pb in db.PHONGBANs.ToList())
+                {
+                    comboBox.Items.Add(new { Text = pb.TenPhong.Trim(), Value = pb.MaPhong.Trim() });
+                }
         }
         public static string LayTenPBTheoMa(string maPB)
         {

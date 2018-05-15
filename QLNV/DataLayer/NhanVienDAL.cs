@@ -12,23 +12,46 @@ namespace QLNV.DataLayer
 {
     class NhanVienDAL
     {
-        public static DataTable ThemNhanVien(NhanVien NV)
+        public static bool ThemNhanVien(NHANVIEN NV)
         {
-            DataAccessHelper db = new DataAccessHelper();
-            SqlCommand cmd = db.Command("ThemNhanVien");
+            var CheckExistUser = DataAccessHelper.DB.NHANVIENs.FirstOrDefault(s => s.MaNV == NV.MaNV);
 
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@MaNV", NV.MaNV);
-            cmd.Parameters.AddWithValue("@TenNV", NV.HoTen);
-            cmd.Parameters.AddWithValue("@SoDT", NV.SDT);
-            cmd.Parameters.AddWithValue("@NgaySinh", NV.NgaySinh);
-            cmd.Parameters.AddWithValue("@MaPhong", NV.MaPhong);
-            cmd.Parameters.AddWithValue("@MaLoaiNV", NV.MaLoaiNV);
+            if (CheckExistUser != null)
+            {
+                return false;
+            }
 
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            db.dt = new DataTable();
-            da.Fill(db.dt);
-            return db.dt;
+            DataAccessHelper.DB.NHANVIENs.InsertOnSubmit(NV);
+            DataAccessHelper.DB.SubmitChanges();
+            return true;
+        }
+
+        public static bool ThemNVBienChe(NHANVIENBIENCHE NV)
+        {
+            var CheckExistUser = DataAccessHelper.DB.NHANVIENBIENCHEs.FirstOrDefault(s => s.MaNV == NV.MaNV);
+
+            if (CheckExistUser != null)
+            {
+                return false;
+            }
+
+            DataAccessHelper.DB.NHANVIENBIENCHEs.InsertOnSubmit(NV);
+            DataAccessHelper.DB.SubmitChanges();
+            return true;
+        }
+
+        public static bool ThemNVCongNhat(NHANVIENCONGNHAT NV)
+        {
+            var CheckExistUser = DataAccessHelper.DB.NHANVIENCONGNHATs.FirstOrDefault(s => s.MaNV == NV.MaNV);
+
+            if (CheckExistUser != null)
+            {
+                return false;
+            }
+
+            DataAccessHelper.DB.NHANVIENCONGNHATs.InsertOnSubmit(NV);
+            DataAccessHelper.DB.SubmitChanges();
+            return true;
         }
 
         public static bool CapNhatNhanVien(NhanVien NV)
@@ -85,15 +108,21 @@ namespace QLNV.DataLayer
             return "";
         }
 
-        public static List<NhanVien> GetList()
+        public static dynamic GetList()
         {
-            DataAccessHelper db = new DataAccessHelper();
-            DataTable dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV");
-            List<NhanVien> list = new List<NhanVien>();
-            foreach (DataRow row in dt.Rows)
-            {
-                list.Add(new NhanVien(row));
-            }
+            var list = from nv in DataAccessHelper.DB.NHANVIENs
+                       join luong in DataAccessHelper.DB.LUONGs on nv.MaNV equals luong.MaNV
+                       orderby nv.MaNV
+                       select new
+                       {
+                           nv.MaNV,
+                           nv.TenNV,
+                           nv.NgaySinh,
+                           nv.SoDT,
+                           nv.MaLoaiNV,
+                           luong.Luong1,
+                           nv.MaPhong
+                       };
             return list;
         }
 
@@ -134,27 +163,19 @@ namespace QLNV.DataLayer
             return list;
         }
 
-        public static void ThemLuong(string maNV, int thang, int nam, decimal luong)
+        public static void ThemLuong(NHANVIEN NV, int thang, int nam, decimal luong)
         {
-            try
-            {
-                DataAccessHelper db = new DataAccessHelper();
-                SqlCommand cmd = db.Command("ThemLuong");
+            var CheckExistUser = DataAccessHelper.DB.LUONGs.FirstOrDefault(s => s.MaNV == NV.MaNV);
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@MaNV", maNV);
-                cmd.Parameters.AddWithValue("@Thang", thang);
-                cmd.Parameters.AddWithValue("@Nam", nam);
-                cmd.Parameters.AddWithValue("@Luong", luong);
-
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                db.dt = new DataTable();
-                da.Fill(db.dt);
-            }
-            catch
+            if (CheckExistUser != null)
             {
-                MessageBox.Show("Đã xảy ra lỗi, vui lòng kiểm tra lại", "Thông báo", MessageBoxButtons.OK);
+                MessageBox.Show("Exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            LUONG _luong = new LUONG(NV.MaNV, thang, nam, luong);
+
+            DataAccessHelper.DB.LUONGs.InsertOnSubmit(_luong);
+            DataAccessHelper.DB.SubmitChanges();
         }
 
         public static void CapNhatLuong(string maNV, int thang, int nam, decimal luong)

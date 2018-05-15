@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using QLNV.BusinessLayer;
 using QLNV.Entities;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QLNV
 {
@@ -25,6 +26,7 @@ namespace QLNV
         string locLoaiKey;
         string locThang;
         string locNam;
+        DataClassesDataContext db = new DataClassesDataContext();
 
         public Form1()
         {
@@ -33,6 +35,7 @@ namespace QLNV
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             locPhongKey = "";
             locLoaiKey = "";
             locThang = "";
@@ -78,39 +81,45 @@ namespace QLNV
             }
             catch { maPhong = ""; }
 
-            NhanVien NV = new NhanVien(txtMaNV.Text.Trim(),
+            NHANVIEN NV = new NHANVIEN(txtMaNV.Text.Trim(),
                 txtTenNV.Text,
                 dtNgaySinh.Value.Date,
                 txtSDTNV.Text,
                 maLoai,
-                maPhong,
-                luong);
+                maPhong);
+            
             try
             {
                 if (NhanVienBLL.ThemNV(NV))
                 {
-                    LoadDatagridview(DGVTypeLoad.None);
                     MessageBox.Show("Đã thêm nhân viên thành công", "Thông báo", MessageBoxButtons.OK);
                     btnThem.Enabled = false;
                     btnSua.Enabled = true;
-                    btnXoa.Enabled = true;                  
+                    btnXoa.Enabled = true;
 
                     if (maLoai == "MALNV00001")
                     {
-                        themNhanVienBienChe(NV.MaNV);
+                        NHANVIENBIENCHE nv = new NHANVIENBIENCHE(NV.MaNV,
+                            float.Parse(txtBL_SNL.Text),
+                            decimal.Parse(txtPC_LN.Text),
+                            decimal.Parse(txtLuongThang.Text));
+                        NhanVienBLL.ThemNVBienChe(nv);
                         luong = decimal.Parse(txtPC_LN.Text) + decimal.Parse(txtLuongThang.Text) * decimal.Parse(txtBL_SNL.Text);
                     }
                     else
                     {
-                        themNhanVienCongNhat(NV.MaNV);
+                        NHANVIENCONGNHAT nv = new NHANVIENCONGNHAT(NV.MaNV,
+                            float.Parse(txtBL_SNL.Text),
+                            decimal.Parse(txtPC_LN.Text));
+                        NhanVienBLL.ThemNVCongNhat(nv);
                         luong = decimal.Parse(txtPC_LN.Text) * decimal.Parse(txtBL_SNL.Text);
                     }
 
-                    themLuong(NV.MaNV, luong);
+                    NhanVienBLL.ThemLuong(NV, DateTime.Now.Month, DateTime.Now.Year, luong);
                     LoadDatagridview(DGVTypeLoad.None);
                 }
                 else
-                    MessageBox.Show("Lỗi chưa xác định", "Thông báo", MessageBoxButtons.OK);
+                    MessageBox.Show("Nhân viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {
@@ -156,11 +165,6 @@ namespace QLNV
                 decimal.Parse(txtPC_LN.Text));
 
             NhanVienCongNhatBLL.CapNhatNhanVienCN(NVCN);
-        }
-
-        void themLuong(string maNV, decimal luong)
-        {
-            NhanVienBLL.ThemLuong(maNV, DateTime.Now.Month, DateTime.Now.Year, luong);
         }
 
         void UpdateVisibleProperty(bool value)
