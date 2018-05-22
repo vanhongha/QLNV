@@ -83,15 +83,41 @@ namespace QLNV.DataLayer
         {
             try
             {
-                DataAccessHelper db = new DataAccessHelper();
-                SqlCommand cmd = db.Command("XoaNhanVien");
+                //DataAccessHelper db = new DataAccessHelper();
+                //SqlCommand cmd = db.Command("XoaNhanVien");
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@MaNV", maNV);
+                //cmd.CommandType = CommandType.StoredProcedure;
+                //cmd.Parameters.AddWithValue("@MaNV", maNV);
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                db.dt = new DataTable();
-                da.Fill(db.dt);
+                //SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //db.dt = new DataTable();
+                //da.Fill(db.dt);
+                try
+                {
+                    NHANVIENBIENCHE NVBC = DataAccessHelper.DB.NHANVIENBIENCHEs.Single(_nv => _nv.MaNV == maNV);
+                    DataAccessHelper.DB.NHANVIENBIENCHEs.DeleteOnSubmit(NVBC);
+                }
+                catch { }
+
+                try
+                {
+                    NHANVIENCONGNHAT NVCN = DataAccessHelper.DB.NHANVIENCONGNHATs.Single(_nv => _nv.MaNV == maNV);
+                    DataAccessHelper.DB.NHANVIENCONGNHATs.DeleteOnSubmit(NVCN);
+                }
+                catch { }
+
+                try
+                {
+                    LUONG luong = DataAccessHelper.DB.LUONGs.Single(_luong => _luong.MaNV == maNV);
+                    DataAccessHelper.DB.LUONGs.DeleteOnSubmit(luong);
+                }
+                catch { }
+
+                NHANVIEN NV = DataAccessHelper.DB.NHANVIENs.Single(_nv => _nv.MaNV == maNV);
+                DataAccessHelper.DB.NHANVIENs.DeleteOnSubmit(NV);
+
+                DataAccessHelper.DB.SubmitChanges();
+               
             }
             catch
             {

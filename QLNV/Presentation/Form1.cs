@@ -430,6 +430,7 @@ namespace QLNV
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0 || e.RowIndex > dgv.RowCount) { return; }
             txtMaNV.Text = dgv.Rows[e.RowIndex].Cells[0].Value.ToString().Trim();
 
             NHANVIEN nv = NhanVienDAL.GetNhanVien(txtMaNV.Text);
@@ -498,6 +499,51 @@ namespace QLNV
             {
                 MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }  
+        }
+
+        private void txtBacLuong_SoNgayLam_TextChanged(object sender, EventArgs e)
+        {
+            if(txtBacLuong_SoNgayLam.Text.Trim() == "") { return; }
+
+            try
+            {
+                double.Parse(txtBacLuong_SoNgayLam.Text.Trim());
+            }
+            catch
+            {
+                MessageBox.Show("Vui lòng nhập số", "Lỗi nhập", MessageBoxButtons.OK);
+                txtBacLuong_SoNgayLam.Text = "0";
+            }
+        }
+
+        private void txtPhuCap_LuongNgay_TextChanged(object sender, EventArgs e)
+        {
+            if (txtPhuCap_LuongNgay.Text.Trim() == "") { return; }
+
+            try
+            {
+                double.Parse(txtPhuCap_LuongNgay.Text.Trim());
+            }
+            catch
+            {
+                MessageBox.Show("Vui lòng nhập số", "Lỗi nhập", MessageBoxButtons.OK);
+                txtPhuCap_LuongNgay.Text = "0";
+            }
+        }
+
+        private void txtLuongThang_TextChanged(object sender, EventArgs e)
+        {
+            if (txtLuongThang.Text.Trim() == "") { return; }
+
+            try
+            {
+                double.Parse(txtLuongThang.Text.Trim());
+            }
+            catch
+            {
+                MessageBox.Show("Vui lòng nhập số", "Lỗi nhập", MessageBoxButtons.OK);
+                txtLuongThang.Text = "0";
+            }
+        }
     }
 }

@@ -152,6 +152,7 @@
             this.txtLuongThang.Size = new System.Drawing.Size(216, 27);
             this.txtLuongThang.TabIndex = 88;
             this.txtLuongThang.Visible = false;
+            this.txtLuongThang.TextChanged += new System.EventHandler(this.txtLuongThang_TextChanged);
             // 
             // lbLuongThang
             // 
@@ -293,6 +294,7 @@
             this.txtPhuCap_LuongNgay.Size = new System.Drawing.Size(216, 27);
             this.txtPhuCap_LuongNgay.TabIndex = 11;
             this.txtPhuCap_LuongNgay.Visible = false;
+            this.txtPhuCap_LuongNgay.TextChanged += new System.EventHandler(this.txtPhuCap_LuongNgay_TextChanged);
             // 
             // lbPC_LN
             // 
@@ -313,6 +315,7 @@
             this.txtBacLuong_SoNgayLam.Size = new System.Drawing.Size(216, 27);
             this.txtBacLuong_SoNgayLam.TabIndex = 11;
             this.txtBacLuong_SoNgayLam.Visible = false;
+            this.txtBacLuong_SoNgayLam.TextChanged += new System.EventHandler(this.txtBacLuong_SoNgayLam_TextChanged);
             // 
             // txtSDTNV
             // 
