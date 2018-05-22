@@ -22,10 +22,12 @@ namespace QLNV
     public partial class Form1 : Form
     {
         string currentMaNV;
-        string locPhongKey;
-        string locLoaiKey;
-        string locThang;
-        string locNam;
+        string maPhong;
+        string maLoaiNV;
+        int thang;
+        int nam;
+        bool locLuong;
+        
         DataClassesDataContext db = new DataClassesDataContext();
         const string nvCongNhat = "MALNV00002";
 
@@ -36,11 +38,11 @@ namespace QLNV
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            locPhongKey = "";
-            locLoaiKey = "";
-            locThang = "";
-            locNam = "";
+            locLuong = false;
+            maPhong = "";
+            maLoaiNV = "";
+            thang = 0;
+            nam = 0;
             cboPhongBan_Loc.Enabled = false;
             cboLoaiNV_Loc.Enabled = false;
             currentMaNV = NhanVienBLL.AutoMaNV();
@@ -55,7 +57,7 @@ namespace QLNV
             LoaiNhanVienBLL.LoaiNVToCombobox(cboLoaiNV_Loc);
             LoaiNhanVienBLL.LoaiNVToCombobox(cboLoaiNV);
 
-            LoadDatagridview(DGVTypeLoad.None);
+            LoadDatagridview();
             ClearAllInput();
         }
 
@@ -118,7 +120,7 @@ namespace QLNV
                     }
 
                     NhanVienBLL.ThemLuong(NV, DateTime.Now.Month, DateTime.Now.Year, luong);
-                    LoadDatagridview(DGVTypeLoad.None);
+                    LoadDatagridview();
                 }
                 else
                     MessageBox.Show("Nhân viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK);
@@ -183,48 +185,22 @@ namespace QLNV
         private void btnXoa_Click(object sender, EventArgs e)
         {
             NhanVienBLL.XoaNhanVien(txtMaNV.Text.Trim());
-            LoadDatagridview(DGVTypeLoad.None);
+            LoadDatagridview();
             MessageBox.Show("Đã xóa thành công", "Thông báo", MessageBoxButtons.OK);
             LamMoi();
         }
 
-        void LoadDatagridview(DGVTypeLoad type, string maPhong = null, string maLoaiNV = null, string thang = null, string nam = null)
+        void LoadDatagridview()
         {
-            switch (type)
-            {
-                case DGVTypeLoad.None:
-                    dgv.DataSource = NhanVienBLL.GetList();
-                    break;
-                case DGVTypeLoad.Phong:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, maPhong);
-                    break;
-                case DGVTypeLoad.LoaiNV:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, null, maLoaiNV);
-                    break;
-                case DGVTypeLoad.Luong:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(DGVTypeLoad.Luong, null, null, thang, nam);
-                    break;
-                case DGVTypeLoad.Loai_Phong:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, maPhong, maLoaiNV);
-                    break;
-                case DGVTypeLoad.Luong_Phong:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, maPhong, null, thang, nam);
-                    break;
-                case DGVTypeLoad.Luong_Loai:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, null, maLoaiNV, thang, nam);
-                    break;
-                case DGVTypeLoad.All:
-                    dgv.DataSource = NhanVienBLL.GetListTheoKey(type, maPhong, maLoaiNV, thang, nam);
-                    break;
-            }
+            dgv.DataSource = NhanVienBLL.GetList(locLuong, maPhong, maLoaiNV, thang, nam);          
 
-            dgv.Columns[0].HeaderText = "Mã NV";
-            dgv.Columns[1].HeaderText = "Họ tên";
-            dgv.Columns[2].HeaderText = "Ngày sinh";
-            dgv.Columns[3].HeaderText = "Điện thoại";
-            dgv.Columns[4].HeaderText = "Loại NV";
-            dgv.Columns[5].HeaderText = "Lương";
-            dgv.Columns[6].HeaderText = "Mã Phòng";
+            //dgv.Columns[0].HeaderText = "Mã NV";
+            //dgv.Columns[1].HeaderText = "Họ tên";
+            //dgv.Columns[2].HeaderText = "Ngày sinh";
+            //dgv.Columns[3].HeaderText = "Điện thoại";
+            //dgv.Columns[4].HeaderText = "Loại NV";
+            //dgv.Columns[5].HeaderText = "Lương";
+            //dgv.Columns[6].HeaderText = "Mã Phòng";
         }
 
         void ClearAllInput()
@@ -242,149 +218,73 @@ namespace QLNV
 #region FILTER
         private void ckLocLoaiNV_CheckedChanged(object sender, EventArgs e)
         {
+            maLoaiNV = string.Empty;
             if (ckLocLoaiNV.Checked)
             {
-                if (!ckLocTheoPhong.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.LoaiNV, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (ckLocTheoPhong.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Loai_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (!ckLocTheoPhong.Checked && ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Luong_Loai, locPhongKey, locLoaiKey, locThang, locNam);
-                else
-                    LoadDatagridview(DGVTypeLoad.All, locPhongKey, locLoaiKey, locThang, locNam);
                 cboLoaiNV_Loc.Enabled = true;
             }
             else
             {
-                if (!ckLocTheoPhong.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.None, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (ckLocTheoPhong.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (!ckLocTheoPhong.Checked && ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Luong, locPhongKey, locLoaiKey, locThang, locNam);
-                else LoadDatagridview(DGVTypeLoad.Luong_Phong, locPhongKey, locLoaiKey, locThang, locNam);
                 cboLoaiNV_Loc.Enabled = false;
             }
+            LoadDatagridview();
         }
 
         private void ckLocTheoPhong_CheckedChanged(object sender, EventArgs e)
         {
+            maPhong = string.Empty;
             if (ckLocTheoPhong.Checked)
             {
-                if (!ckLocLoaiNV.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (ckLocLoaiNV.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Loai_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (!ckLocLoaiNV.Checked && ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Luong_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                else
-                    LoadDatagridview(DGVTypeLoad.All, locPhongKey, locLoaiKey, locThang, locNam);
                 cboPhongBan_Loc.Enabled = true;
             }
             else
             {
-                if (!ckLocLoaiNV.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.None, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (ckLocLoaiNV.Checked && !ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.LoaiNV, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (!ckLocLoaiNV.Checked && ckLocLuong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Luong, locPhongKey, locLoaiKey, locThang, locNam);
-                else
-                    LoadDatagridview(DGVTypeLoad.Luong_Loai, locPhongKey, locLoaiKey, locThang, locNam);
                 cboPhongBan_Loc.Enabled = false;
-                cboPhongBan_Loc.Text = "";
             }
+            LoadDatagridview();
         }
 
         private void ckLocLuong_CheckedChanged(object sender, EventArgs e)
         {
+            thang = 0;
+            nam = 0;
+            locLuong = !locLuong;
             if (ckLocLuong.Checked)
-            {
-                if (!ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Luong, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Luong_Loai, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (!ckLocLoaiNV.Checked && ckLocTheoPhong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Luong_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                else
-                    LoadDatagridview(DGVTypeLoad.All, locPhongKey, locLoaiKey, locThang, locNam);
-
+            {       
                 cboThang.Enabled = true;
                 txtNam.Enabled = true;
             }
             else
             {
-                if (!ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                    LoadDatagridview(DGVTypeLoad.None, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                    LoadDatagridview(DGVTypeLoad.LoaiNV, locPhongKey, locLoaiKey, locThang, locNam);
-                else if (!ckLocLoaiNV.Checked && ckLocTheoPhong.Checked)
-                    LoadDatagridview(DGVTypeLoad.Phong, locPhongKey, locLoaiKey, locThang, locNam);
-                else
-                    LoadDatagridview(DGVTypeLoad.Loai_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-
                 cboThang.Enabled = false;
                 txtNam.Enabled = false;
             }
+            LoadDatagridview();
         }
 
         private void cboPhongBan_Loc_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string phongKey = GetKeyFromCombobox(cboPhongBan_Loc.SelectedItem.ToString());
-            locPhongKey = phongKey;
-            if (!ckLocLoaiNV.Checked)
-                LoadDatagridview(DGVTypeLoad.Phong, phongKey);
-            else
-            {
-                string loaiKey;
-                if (cboLoaiNV_Loc.SelectedItem == null)
-                    loaiKey = "";
-                else
-                    loaiKey = GetKeyFromCombobox(cboLoaiNV_Loc.SelectedItem.ToString());
-                LoadDatagridview(DGVTypeLoad.Loai_Phong, phongKey, loaiKey);
-            }
+            maPhong = GetKeyFromCombobox(cboPhongBan_Loc.SelectedItem.ToString());
+            LoadDatagridview();
         }
 
         private void cboLoaiNV_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string loaiKey = GetKeyFromCombobox(cboLoaiNV_Loc.SelectedItem.ToString());
-            locLoaiKey = loaiKey;
-
-            if (!ckLocTheoPhong.Checked && !ckLocLuong.Checked)
-                LoadDatagridview(DGVTypeLoad.LoaiNV, locPhongKey, locLoaiKey, locThang, locNam);
-            else if (ckLocTheoPhong.Checked && !ckLocLuong.Checked)
-                LoadDatagridview(DGVTypeLoad.Loai_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-            else if (!ckLocTheoPhong.Checked && ckLocLuong.Checked)
-                LoadDatagridview(DGVTypeLoad.Luong_Loai, locPhongKey, locLoaiKey, locThang, locNam);
-            else
-                LoadDatagridview(DGVTypeLoad.All, locPhongKey, locLoaiKey, locThang, locNam);
+            maLoaiNV = GetKeyFromCombobox(cboLoaiNV_Loc.SelectedItem.ToString());
+            LoadDatagridview();
         }
 
 
         private void cboThang_SelectedIndexChanged(object sender, EventArgs e)
         {
-            locThang = cboThang.SelectedItem.ToString();
-            if(!ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                LoadDatagridview(DGVTypeLoad.Luong, locPhongKey, locLoaiKey, locThang, locNam);
-            else if (ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                LoadDatagridview(DGVTypeLoad.Luong_Loai, locPhongKey, locLoaiKey, locThang, locNam);
-            else if (!ckLocLoaiNV.Checked && ckLocTheoPhong.Checked)
-                LoadDatagridview(DGVTypeLoad.Luong_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-            else
-                LoadDatagridview(DGVTypeLoad.All, locPhongKey, locLoaiKey, locThang, locNam);
+            thang = Convert.ToInt32(cboThang.SelectedItem.ToString());
+            LoadDatagridview();
         }
 
         private void txtNam_TextChanged(object sender, EventArgs e)
         {
-            locNam = txtNam.Text;
-            if (!ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                LoadDatagridview(DGVTypeLoad.Luong, locPhongKey, locLoaiKey, locThang, locNam);
-            else if (ckLocLoaiNV.Checked && !ckLocTheoPhong.Checked)
-                LoadDatagridview(DGVTypeLoad.Luong_Loai, locPhongKey, locLoaiKey, locThang, locNam);
-            else if (!ckLocLoaiNV.Checked && ckLocTheoPhong.Checked)
-                LoadDatagridview(DGVTypeLoad.Luong_Phong, locPhongKey, locLoaiKey, locThang, locNam);
-            else
-                LoadDatagridview(DGVTypeLoad.All, locPhongKey, locLoaiKey, locThang, locNam);
+            nam = Convert.ToInt32(txtNam.Text);
+            LoadDatagridview();
         }
         #endregion
 
@@ -481,7 +381,7 @@ namespace QLNV
             {
                 if (NhanVienBLL.CapNhatNhanVien(NV))
                 {
-                    LoadDatagridview(DGVTypeLoad.None);
+                    LoadDatagridview();
 
                     if (maLoai == nvCongNhat)
                         CapNhatNhanVienCongNhat(NV.MaNV);
@@ -490,7 +390,7 @@ namespace QLNV
 
                     MessageBox.Show("Đã cập nhật nhân viên thành công", "Thông báo", MessageBoxButtons.OK);
 
-                    LoadDatagridview(DGVTypeLoad.None);
+                    LoadDatagridview();
                 }
                 else
                     MessageBox.Show("Lỗi chưa xác định", "Thông báo", MessageBoxButtons.OK);

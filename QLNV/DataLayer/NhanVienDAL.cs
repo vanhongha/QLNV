@@ -184,41 +184,61 @@ namespace QLNV.DataLayer
             return NV.FirstOrDefault();
         }
 
-        public static List<NhanVien> GetListTheoKey(DGVTypeLoad type, string maPhong = null, string maLoai = null, string thang = null, string nam = null)
+        public static dynamic GetList(bool locLuong, string maphong, string maLoai, int thang, int nam)
         {
-            DataAccessHelper db = new DataAccessHelper();
-            DataTable dt = null;
-            switch (type)
+            var queryLocLuong = from nv in DataAccessHelper.DB.NHANVIENs
+                        join luong in DataAccessHelper.DB.LUONGs on nv.MaNV equals luong.MaNV
+                        orderby nv.MaNV
+                        select new
+                        {
+                            nv.MaNV,
+                            nv.TenNV,
+                            nv.NgaySinh,
+                            nv.SoDT,
+                            nv.MaLoaiNV,
+                            luong.Luong1,
+                            nv.MaPhong,
+                            luong.Thang,
+                            luong.Nam
+                        };
+
+            var query = from nv in DataAccessHelper.DB.NHANVIENs
+                                orderby nv.MaNV
+                                select new
+                                {
+                                    nv.MaNV,
+                                    nv.TenNV,
+                                    nv.NgaySinh,
+                                    nv.SoDT,
+                                    nv.MaLoaiNV,
+                                    nv.MaPhong,
+                                };
+
+
+            if (thang != 0)
+                queryLocLuong = queryLocLuong.Where(nv => nv.Thang == thang);
+
+            if (nam != 0) 
+                queryLocLuong = queryLocLuong.Where(nv => nv.Nam == nam);
+
+            if (string.Compare(maphong, string.Empty) != 0)
+                query = query.Where(nv => nv.MaPhong == maphong);
+
+            if(string.Compare(maLoai, string.Empty) != 0)
+                query = query.Where(nv => nv.MaLoaiNV == maLoai);
+
+            if(locLuong)
             {
-                case DGVTypeLoad.Phong:
-                     dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MAPHONG = '" + maPhong + "'");
-                    break;
-                case DGVTypeLoad.LoaiNV:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "'");
-                    break;
-                case DGVTypeLoad.Luong:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
-                    break;
-                case DGVTypeLoad.Loai_Phong:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' AND MAPHONG = '" + maPhong + "'");
-                    break;
-                case DGVTypeLoad.Luong_Phong:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MAPHONG = '" + maPhong + "' AND l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
-                    break;
-                case DGVTypeLoad.Luong_Loai:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' AND l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
-                    break;
-                case DGVTypeLoad.All:
-                    dt = db.GetDataTable("SELECT * FROM NHANVIEN nv FULL OUTER JOIN LUONG l on nv.MaNV = l.MaNV WHERE MaLoaiNV = '" + maLoai + "' AND MAPHONG = '" + maPhong + "' AND l.Thang = '" + thang + "' AND l.Nam = '" + nam + "' ORDER BY l.Luong DESC");
-                    break;
+                if (string.Compare(maphong, string.Empty) != 0)
+                    queryLocLuong = queryLocLuong.Where(nv => nv.MaPhong == maphong);
+
+                if (string.Compare(maLoai, string.Empty) != 0)
+                    queryLocLuong = queryLocLuong.Where(nv => nv.MaLoaiNV == maLoai);
+
+                return queryLocLuong;
             }
-          
-            List<NhanVien> list = new List<NhanVien>();
-            foreach (DataRow row in dt.Rows)
-            {
-                list.Add(new NhanVien(row));
-            }
-            return list;
+            else
+                return query;            
         }
 
         public static void ThemLuong(NHANVIEN NV, int thang, int nam, decimal luong)
@@ -234,29 +254,6 @@ namespace QLNV.DataLayer
 
             DataAccessHelper.DB.LUONGs.InsertOnSubmit(_luong);
             DataAccessHelper.DB.SubmitChanges();
-        }
-
-        public static void CapNhatLuong(string maNV, int thang, int nam, decimal luong)
-        {
-            try
-            {
-                DataAccessHelper db = new DataAccessHelper();
-                SqlCommand cmd = db.Command("CapNhatLuong");
-
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@MaNV", maNV);
-                cmd.Parameters.AddWithValue("@Thang", thang);
-                cmd.Parameters.AddWithValue("@Nam", nam);
-                cmd.Parameters.AddWithValue("@Luong", luong);
-
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                db.dt = new DataTable();
-                da.Fill(db.dt);
-            }
-            catch
-            {
-                MessageBox.Show("Đã xảy ra lỗi, vui lòng kiểm tra lại", "Thông báo", MessageBoxButtons.OK);
-            }
         }
     }
 }
