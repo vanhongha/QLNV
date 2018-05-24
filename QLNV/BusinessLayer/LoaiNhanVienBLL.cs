@@ -9,11 +9,6 @@ namespace QLNV.BusinessLayer
 {
     class LoaiNhanVienBLL
     {
-        public static List<LoaiNhanVien> GetList()
-        {
-            return LoaiNhanVienDAL.GetList();
-        }
-
         public static void LoaiNVToCombobox(ComboBox comboBox)
         {
             comboBox.DisplayMember = "Text";

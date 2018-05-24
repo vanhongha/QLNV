@@ -43,7 +43,7 @@ namespace QLNV.DataLayer
         #region Init properties
         public DataAccessHelper()
         {
-            String connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=QLNV;Data Source=DESKTOP-54EQF0R\SQLEXPRESS";
+            String connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=QLNV;Data Source=DESKTOP-29U4V2H\SQLEXPRESS";
             con = new SqlConnection(connectionString);
         }
         #endregion

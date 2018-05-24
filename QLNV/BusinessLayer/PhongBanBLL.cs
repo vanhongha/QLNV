@@ -11,11 +11,6 @@ namespace QLNV.BusinessLayer
 {
     class PhongBanBLL
     {
-        public static List<PhongBan> GetList()
-        {
-            return PhongBanDAL.GetList();
-        }
-
         public static void PhongBanToCombobox(ComboBox comboBox)
         {
             comboBox.DisplayMember = "Text";

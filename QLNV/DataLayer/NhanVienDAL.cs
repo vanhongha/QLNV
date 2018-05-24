@@ -83,15 +83,6 @@ namespace QLNV.DataLayer
         {
             try
             {
-                //DataAccessHelper db = new DataAccessHelper();
-                //SqlCommand cmd = db.Command("XoaNhanVien");
-
-                //cmd.CommandType = CommandType.StoredProcedure;
-                //cmd.Parameters.AddWithValue("@MaNV", maNV);
-
-                //SqlDataAdapter da = new SqlDataAdapter(cmd);
-                //db.dt = new DataTable();
-                //da.Fill(db.dt);
                 try
                 {
                     NHANVIENBIENCHE NVBC = DataAccessHelper.DB.NHANVIENBIENCHEs.Single(_nv => _nv.MaNV == maNV);
@@ -127,13 +118,10 @@ namespace QLNV.DataLayer
 
         public static string GetLastID()
         {
-            DataAccessHelper db = new DataAccessHelper();
-            DataTable dt = db.GetDataTable("Select top 1 MaNV from NHANVIEN order by MaNV desc");
-            foreach (DataRow row in dt.Rows)
-            {
-                return row.ItemArray[0].ToString();
-            }
-            return "";
+            var NV = from nv in DataAccessHelper.DB.NHANVIENs
+                     orderby nv.MaNV descending
+                     select nv.MaNV;
+            return NV.FirstOrDefault();
         }
 
         public static dynamic GetList()
