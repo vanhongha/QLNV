@@ -34,6 +34,7 @@ namespace QLNV
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -59,6 +60,26 @@ namespace QLNV
 
             LoadDatagridview();
             ClearAllInput();
+            initButtonStyle();
+        }
+
+        void initButtonStyle()
+        {
+            btnThem.FlatStyle = FlatStyle.Flat;
+            btnThem.FlatAppearance.BorderColor = System.Drawing.Color.MediumSeaGreen;
+            btnThem.FlatAppearance.BorderSize = 1;
+
+            btnXoa.FlatStyle = FlatStyle.Flat;
+            btnXoa.FlatAppearance.BorderColor = System.Drawing.Color.MediumSeaGreen;
+            btnXoa.FlatAppearance.BorderSize = 1;
+
+            btnSua.FlatStyle = FlatStyle.Flat;
+            btnSua.FlatAppearance.BorderColor = System.Drawing.Color.MediumSeaGreen;
+            btnSua.FlatAppearance.BorderSize = 1;
+
+            btnLamMoi.FlatStyle = FlatStyle.Flat;
+            btnLamMoi.FlatAppearance.BorderColor = System.Drawing.Color.MediumSeaGreen;
+            btnLamMoi.FlatAppearance.BorderSize = 1;
         }
 
         void AddThangCombobox()
@@ -69,21 +90,36 @@ namespace QLNV
             }
         }
 
+        
+
         // LINQ TO SQL
         private void btnThem_Click(object sender, EventArgs e)
         {
+            if (txtTenNV.Text.Trim() == "")
+            {
+                MessageBox.Show("Tên nhân viên không được bỏ trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             string maLoai, maPhong;
             decimal luong = 0;
             try
             {
                 maLoai = GetKeyFromCombobox(cboLoaiNV.SelectedItem.ToString());
             }
-            catch { maLoai = ""; }
+            catch
+            {
+                MessageBox.Show("Chưa chọn loại nhân viên", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 maPhong = GetKeyFromCombobox(cboPhongBan.SelectedItem.ToString());
             }
-            catch { maPhong = ""; }
+            catch
+            {
+                MessageBox.Show("Chưa chọn phòng ban cho nhân viên", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             NHANVIEN NV = new NHANVIEN(txtMaNV.Text.Trim(),
                 txtTenNV.Text,
