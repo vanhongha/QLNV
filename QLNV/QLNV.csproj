@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,14 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLayer\LoaiNhanVienBLL.cs" />
-    <Compile Include="BusinessLayer\NhanVienBienCheBLL.cs" />
     <Compile Include="BusinessLayer\NhanVienBLL.cs" />
-    <Compile Include="BusinessLayer\NhanVienCongNhatBLL.cs" />
     <Compile Include="BusinessLayer\PhongBanBLL.cs" />
+    <Compile Include="DataClasses.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses.dbml</DependentUpon>
+    </Compile>
     <Compile Include="DataLayer\DataAccessHelper.cs" />
     <Compile Include="DataLayer\LoaiNhanVienDAL.cs" />
-    <Compile Include="DataLayer\NhanVienBienCheDAL.cs" />
-    <Compile Include="DataLayer\NhanVienCongNhatDAL.cs" />
     <Compile Include="DataLayer\NhanVienDAL.cs" />
     <Compile Include="DataLayer\PhongBanDAL.cs" />
     <Compile Include="Entities\LoaiNhanVien.cs" />
@@ -82,6 +84,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="DataClasses.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataClasses.dbml.layout">
+      <DependentUpon>DataClasses.dbml</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -95,6 +105,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

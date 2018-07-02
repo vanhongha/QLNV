@@ -24,30 +24,23 @@ namespace QLNV.BusinessLayer
             return "MANV" + id;
         }
 
-        public static bool ThemNV(NhanVien NV)
+        public static bool ThemNV(NHANVIEN NV)
         {
-            DataTable dt = NhanVienDAL.ThemNhanVien(NV);
-            //foreach (DataRow row in dt.Rows)
-            //{
-            //    if (row.ItemArray[0].ToString().Trim() == "0")
-            //        return true;
-            //}
-            //return false;
-            return true;
+            return NhanVienDAL.ThemNhanVien(NV);
         }
 
-        public static bool ThemNV(NhanVienBienChe NV)
+        public static bool ThemNVBienChe(NHANVIENBIENCHE NV)
         {
-            DataTable dt = NhanVienDAL.ThemNhanVien(NV);
-            return true;
+            return NhanVienDAL.ThemNVBienChe(NV);
         }
 
-        public static bool ThemNV(NhanVienCongNhat NV)
+        public static bool ThemNVCongNhat(NHANVIENCONGNHAT NV)
         {
-            DataTable dt = NhanVienDAL.ThemNhanVien(NV);
-            return true;
+            return NhanVienDAL.ThemNVCongNhat(NV);
         }
-        public static bool CapNhatNhanVien(NhanVien NV)
+
+
+        public static bool CapNhatNhanVien(NHANVIEN NV)
         {
             return NhanVienDAL.CapNhatNhanVien(NV);
         }
@@ -57,25 +50,19 @@ namespace QLNV.BusinessLayer
             NhanVienDAL.XoaNhanVien(maNV);
         }
 
-        public static List<NhanVien> GetList()
+        public static dynamic GetList()
         {
             return NhanVienDAL.GetList();
         }
 
-        public static List<NhanVien> GetListTheoKey(DGVTypeLoad type, string maPhong = null, string loaiLoai = null, string thang = null, string nam = null)
+        public static dynamic GetList(bool locLuong, string maPhong, string maLoai, int thang, int nam)
         {
-            return NhanVienDAL.GetListTheoKey(type, maPhong, loaiLoai, thang, nam);
+            return NhanVienDAL.GetList(locLuong, maPhong, maLoai, thang, nam);
         }
 
-        public static void ThemLuong(string maNV, int thang, int nam, decimal luong)
+        public static void ThemLuong(NHANVIEN NV, int thang, int nam, decimal luong)
         {
-            NhanVienDAL.ThemLuong(maNV, thang, nam, luong);
-        }
-
-
-        public static void CapNhatLuong(string maNV, int thang, int nam, decimal luong)
-        {
-            NhanVienDAL.CapNhatLuong(maNV, thang, nam, luong);
+            NhanVienDAL.ThemLuong(NV, thang, nam, luong);
         }
 
     }

@@ -11,16 +11,11 @@ namespace QLNV.BusinessLayer
 {
     class PhongBanBLL
     {
-        public static List<PhongBan> GetList()
-        {
-            return PhongBanDAL.GetList();
-        }
-
         public static void PhongBanToCombobox(ComboBox comboBox)
         {
             comboBox.DisplayMember = "Text";
             comboBox.ValueMember = "Value";
-            foreach (PhongBan pb in GetList())
+            foreach (PHONGBAN pb in DataAccessHelper.DB.PHONGBANs.ToList())
             {
                 comboBox.Items.Add(new { Text = pb.TenPhong.Trim(), Value = pb.MaPhong.Trim() });
             }
